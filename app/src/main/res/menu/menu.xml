@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="otro"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/popular"
+        android:title="Popular"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/topRated"
+        android:title="Top Rated"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/upcoming"
+        android:title="Upcoming"
+        app:showAsAction="never"/>
+
+</menu>
