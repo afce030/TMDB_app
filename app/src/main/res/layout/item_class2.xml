@@ -20,13 +20,28 @@
             android:layout_height="match_parent"
             android:src="@drawable/landscape_probe"
             app:riv_corner_radius="10dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:alpha="0.8"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/tvRatingIC2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:shadowColor="#FFFFFF"
+                android:text="7.5"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
@@ -36,28 +51,32 @@
                 app:srcCompat="@android:drawable/star_big_on" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tvMovieNameIC2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="50dp"
                 android:text="Nombre Películaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                android:textColor="#FFFFFF"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
+                android:id="@+id/tvReleaseIC2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
+                android:gravity="center"
                 android:text="2019-07-07"
+                android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/tvMovieNameIC2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

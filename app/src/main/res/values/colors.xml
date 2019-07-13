@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorMorado">#380548</color>
+    <color name="colorMorado2">#9b05ca</color>
+    <color name="colorCarmesi">#8b1732</color>
+    <color name="colorCarmesiOscuro">#740727</color>
+    <color name="colorNaranja">#e96329</color>
+    <color name="colorBackground">#090630</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGray">#717171</color>
+    <color name="colorGray2">#353535</color>
+    <color name="colorBlack">#000000</color>
 </resources>

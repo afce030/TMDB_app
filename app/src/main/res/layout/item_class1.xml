@@ -6,7 +6,6 @@
     android:layout_height="200dp"
     android:background="#000">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,14 +20,19 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0.3">
 
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/ivMoviePhotoIC1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher" />
+                    app:riv_corner_radius_top_left="10dp"
+                    app:riv_corner_radius_bottom_left="10dp"
+                    app:riv_corner_radius_top_right="0dp"
+                    app:riv_corner_radius_bottom_right="0dp"
+                    android:src="@drawable/landscape_probe"
+                    android:scaleType="fitXY"/>
 
             </LinearLayout>
 
@@ -69,6 +73,12 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Calificación:"
+                    android:textSize="24sp" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,27 +87,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Calificación:"
-                        android:textSize="24sp" />
-
                     <RatingBar
                         android:id="@+id/rbRatingIC1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:numStars="10"
+                        android:numStars="5"
                         style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:stepSize="0.001"
-                        android:rating="7."
-                        android:scaleX="0.7"
+                        android:rating="3.5"
+                        android:scaleX="1"
                         android:scaleY="1"
-                        android:isIndicator="false"
-                        android:transformPivotX="0dp"
-                        android:transformPivotY="0dp"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginRight="-100dp"/>
+                        android:isIndicator="false"/>
 
                 </LinearLayout>
 
