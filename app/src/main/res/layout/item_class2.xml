@@ -11,7 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="false">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/landscape_probe"
+            app:riv_corner_radius="10dp"
+            android:scaleType="fitXY"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
