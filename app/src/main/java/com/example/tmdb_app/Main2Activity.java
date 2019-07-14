@@ -34,7 +34,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private RecyclerView rvMovies;
     private MoviesAdapter moviesAdapter;
-
+    private String Lang = "es"; //Default language
     private List<Genre_ids> MoviesGenres = new ArrayList<>();
 
     @Override
@@ -45,8 +45,8 @@ public class Main2Activity extends AppCompatActivity {
         Intent intencion = getIntent();
 
         rvMovies = findViewById(R.id.rvMovies);
-        getGenres("en-US");
-        getMovies(intencion.getStringExtra("category"),"en-US", 1);
+        getGenres(Lang);
+        getMovies(intencion.getStringExtra("category"),Lang, 1);
 
     }
 
@@ -67,7 +67,6 @@ public class Main2Activity extends AppCompatActivity {
             public void onResponse(Call<GenreClass> call, Response<GenreClass> response) {
 
                 GenreClass genreClass = response.body();
-
                 completionSource.setResult(genreClass.getGenres());
 
             }
@@ -133,9 +132,6 @@ public class Main2Activity extends AppCompatActivity {
                 rvMovies.setLayoutManager(l);
                 rvMovies.addItemDecoration(dividerItemDecoration);
                 rvMovies.setAdapter(moviesAdapter);
-
-                Toast.makeText(Main2Activity.this, "ooo", Toast.LENGTH_SHORT).show();
-
             }
         });
 

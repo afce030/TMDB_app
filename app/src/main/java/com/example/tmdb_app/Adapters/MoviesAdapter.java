@@ -1,9 +1,11 @@
 package com.example.tmdb_app.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import com.example.tmdb_app.Classes.Genre_ids;
 import com.example.tmdb_app.Classes.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 import com.example.tmdb_app.Holders.HolderMovies;
+import com.example.tmdb_app.MovieVisor;
 import com.example.tmdb_app.R;
 
 import java.util.ArrayList;
@@ -59,18 +62,33 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         }
 
         holder.getGenres().setText("");
+        String generos="";
         for(Genre_ids item: names) {
-            holder.getGenres().append(item.getName() + ", ");
+            generos += item.getName() + ", ";
         }
 
-        float average = movies.get(position).getVoteAverage();
+        final String generosF= generos.substring(0,generos.length()-2);
+        holder.getGenres().setText(generosF);
+
+
+        final float average = movies.get(position).getVoteAverage();
         holder.getRating().setText( String.valueOf(average)+"/10" );
         holder.getRatingBar().setRating(average/2);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(c, MovieVisor.class);
 
+                intent.putExtra("poster", Constants.baseCoverBig+movies.get(position).getPosterPath());
+                intent.putExtra("name", movies.get(position).getTitle());
+                intent.putExtra("rating", String.valueOf(average));
+                intent.putExtra("overview", movies.get(position).getOverview());
+                intent.putExtra("genres", generosF);
+                intent.putExtra("release", movies.get(position).getReleaseDate());
+                intent.putExtra("adults", movies.get(position).getAdult());
+
+                c.startActivity(intent);
             }
         });
 
