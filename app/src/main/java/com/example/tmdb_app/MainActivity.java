@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         upcomingMovies.add(R.drawable.estreno2);
         imagesList.add(upcomingMovies);
 
-        categoryAdapter = new categoryAdapter(getApplicationContext(),categories,imagesList);
+        categoryAdapter = new categoryAdapter(MainActivity.this,categories,imagesList);
 
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
 

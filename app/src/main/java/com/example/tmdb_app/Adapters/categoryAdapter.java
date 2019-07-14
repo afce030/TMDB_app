@@ -2,6 +2,7 @@ package com.example.tmdb_app.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.tmdb_app.Holders.holderCategory;
+import com.example.tmdb_app.Main2Activity;
 import com.example.tmdb_app.R;
 
 import java.util.List;
@@ -55,7 +57,7 @@ public class categoryAdapter extends RecyclerView.Adapter<holderCategory>{
             holder.getImagesContainer().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //c.startActivity(new Intent(c, SearchActivity2.class));
+                    c.startActivity(new Intent(c, Main2Activity.class));
                 }
             });
         }

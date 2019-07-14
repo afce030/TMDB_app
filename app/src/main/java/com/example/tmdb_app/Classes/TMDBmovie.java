@@ -1,92 +1,164 @@
 package com.example.tmdb_app.Classes;
 
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class TMDBmovie {
 
-    private int vote_count;
-    private int id;
-    private boolean video;
-    private float vote_average;
+    @SerializedName("vote_count")
+    @Expose
+    private Long voteCount;
+    @SerializedName("id")
+    @Expose
+    private Long id;
+    @SerializedName("video")
+    @Expose
+    private Boolean video;
+    @SerializedName("vote_average")
+    @Expose
+    private Float voteAverage;
+    @SerializedName("title")
+    @Expose
     private String title;
-    private float popularity;
-    private String poster_path;
-    private String original_language;
-    private String original_title;
-    private int[] genre_ids;
-    private String backdrop_path;
-    private boolean adult;
+    @SerializedName("popularity")
+    @Expose
+    private Float popularity;
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
+    @SerializedName("original_language")
+    @Expose
+    private String originalLanguage;
+    @SerializedName("original_title")
+    @Expose
+    private String originalTitle;
+    @SerializedName("genre_ids")
+    @Expose
+    private List<Long> genreIds = null;
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdropPath;
+    @SerializedName("adult")
+    @Expose
+    private Boolean adult;
+    @SerializedName("overview")
+    @Expose
     private String overview;
-    private String release_data;
+    @SerializedName("release_date")
+    @Expose
+    private String releaseDate;
 
-    public TMDBmovie(int vote_count, int id, boolean video, float vote_average, String title, float popularity, String poster_path, String original_language, String original_title, int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_data) {
-        this.vote_count = vote_count;
-        this.id = id;
-        this.video = video;
-        this.vote_average = vote_average;
-        this.title = title;
-        this.popularity = popularity;
-        this.poster_path = poster_path;
-        this.original_language = original_language;
-        this.original_title = original_title;
-        this.genre_ids = genre_ids;
-        this.backdrop_path = backdrop_path;
-        this.adult = adult;
-        this.overview = overview;
-        this.release_data = release_data;
+    public Long getVoteCount() {
+        return voteCount;
     }
 
-    public int getVote_count() {
-        return vote_count;
+    public void setVoteCount(Long voteCount) {
+        this.voteCount = voteCount;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public boolean isVideo() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getVideo() {
         return video;
     }
 
-    public float getVote_average() {
-        return vote_average;
+    public void setVideo(Boolean video) {
+        this.video = video;
+    }
+
+    public Float getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Float voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public float getPopularity() {
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Float getPopularity() {
         return popularity;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public void setPopularity(Float popularity) {
+        this.popularity = popularity;
     }
 
-    public String getOriginal_language() {
-        return original_language;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public String getOriginal_title() {
-        return original_title;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public int[] getGenre_ids() {
-        return genre_ids;
+    public String getOriginalLanguage() {
+        return originalLanguage;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
     }
 
-    public boolean isAdult() {
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public List<Long> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<Long> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public Boolean getAdult() {
         return adult;
+    }
+
+    public void setAdult(Boolean adult) {
+        this.adult = adult;
     }
 
     public String getOverview() {
         return overview;
     }
 
-    public String getRelease_data() {
-        return release_data;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
 }

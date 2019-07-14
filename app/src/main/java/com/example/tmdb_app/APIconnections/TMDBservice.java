@@ -14,24 +14,24 @@ import retrofit2.http.Query;
 public interface TMDBservice {
 
     @GET(Constants.popular)
-    Call<List<SearchResults>> getPopular(
+    Call<SearchResults> getPopular(
             @Query("api_key") String key,
             @Query("language") String language,
-            @Query("page") String page
+            @Query("page") long page
     );
 
     @GET(Constants.top_rated)
-    Call<List<SearchResults>> getTopRated(
+    Call<SearchResults> getTopRated(
             @Query("api_key") String key,
             @Query("language") String language,
-            @Query("page") String page
+            @Query("page") long page
     );
 
     @GET(Constants.upcoming)
-    Call<List<SearchResults>> getUpcoming(
+    Call<SearchResults> getUpcoming(
             @Query("api_key") String key,
             @Query("language") String language,
-            @Query("page") String page
+            @Query("page") long page
     );
 
 }
