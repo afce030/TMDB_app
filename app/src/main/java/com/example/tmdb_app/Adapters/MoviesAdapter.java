@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +14,7 @@ import com.example.tmdb_app.Classes.Genre_ids;
 import com.example.tmdb_app.Classes.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 import com.example.tmdb_app.Holders.HolderMovies;
-import com.example.tmdb_app.MovieVisor;
+import com.example.tmdb_app.MovieVisorX;
 import com.example.tmdb_app.R;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(c, MovieVisor.class);
+                Intent intent = new Intent(c, MovieVisorX.class);
 
                 intent.putExtra("poster", Constants.baseCoverBig+movies.get(position).getPosterPath());
                 intent.putExtra("name", movies.get(position).getTitle());
