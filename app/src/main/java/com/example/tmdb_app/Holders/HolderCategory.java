@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tmdb_app.Extended_libraries.sliderLayoutNoSwipe;
 import com.example.tmdb_app.R;
 
-public class holderCategory extends RecyclerView.ViewHolder {
+public class HolderCategory extends RecyclerView.ViewHolder {
 
     private TextView categoryName;
     private sliderLayoutNoSwipe imagesContainer;
 
-    public holderCategory(@NonNull View itemView) {
+    public HolderCategory(@NonNull View itemView) {
         super(itemView);
 
         categoryName = itemView.findViewById(R.id.tvCategoryName);

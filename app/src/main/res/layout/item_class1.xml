@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="#000">
+    android:layout_height="250dp"
+    android:background="#000"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -27,12 +27,12 @@
                     android:id="@+id/ivMoviePhotoIC1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:riv_corner_radius_top_left="10dp"
-                    app:riv_corner_radius_bottom_left="10dp"
-                    app:riv_corner_radius_top_right="0dp"
-                    app:riv_corner_radius_bottom_right="0dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/landscape_probe"
-                    android:scaleType="fitXY"/>
+                    app:riv_corner_radius_bottom_left="10dp"
+                    app:riv_corner_radius_bottom_right="0dp"
+                    app:riv_corner_radius_top_left="10dp"
+                    app:riv_corner_radius_top_right="0dp" />
 
             </LinearLayout>
 
@@ -48,20 +48,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="Nombre Película"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tvGenresIC1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Actionxxxxxxxxxxxxxxxxxxxxx"
+                    android:textSize="22sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
                         android:text="Estreno:"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tvReleaseIC1"
@@ -69,35 +76,51 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.6"
                         android:text="2019-07-07"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Calificación:"
-                    android:textSize="24sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calificación: "
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/tvRatingIC1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="7/10"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="left"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="vertical">
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <RatingBar
                         android:id="@+id/rbRatingIC1"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:isIndicator="false"
                         android:numStars="5"
-                        style="@style/Widget.AppCompat.RatingBar.Indicator"
-                        android:stepSize="0.001"
                         android:rating="3.5"
                         android:scaleX="1"
                         android:scaleY="1"
-                        android:isIndicator="false"/>
+                        android:stepSize="0.001" />
 
                 </LinearLayout>
 

@@ -13,25 +13,19 @@ import retrofit2.http.Query;
 
 public interface TMDBservice {
 
-    @GET(Constants.popular)
-    Call<SearchResults> getPopular(
+    @GET("movie/{category}")
+    Call<SearchResults> getMoviesByType(
+            @Path("category") String category,
             @Query("api_key") String key,
             @Query("language") String language,
             @Query("page") long page
     );
 
-    @GET(Constants.top_rated)
-    Call<SearchResults> getTopRated(
+    @GET("genre/movie/list")
+    Call<SearchResults> getMovieGenres(
             @Query("api_key") String key,
-            @Query("language") String language,
-            @Query("page") long page
+            @Query("language") String language
     );
 
-    @GET(Constants.upcoming)
-    Call<SearchResults> getUpcoming(
-            @Query("api_key") String key,
-            @Query("language") String language,
-            @Query("page") long page
-    );
 
 }

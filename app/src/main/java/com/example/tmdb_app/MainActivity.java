@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.tmdb_app.Adapters.categoryAdapter;
+import com.example.tmdb_app.Adapters.CategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvCategories;
-    private categoryAdapter categoryAdapter;
+    private CategoryAdapter categoryAdapter;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         upcomingMovies.add(R.drawable.estreno2);
         imagesList.add(upcomingMovies);
 
-        categoryAdapter = new categoryAdapter(MainActivity.this,categories,imagesList);
+        categoryAdapter = new CategoryAdapter(MainActivity.this,categories,imagesList);
 
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
 
