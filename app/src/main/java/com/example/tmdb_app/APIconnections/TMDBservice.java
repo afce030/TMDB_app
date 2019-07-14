@@ -1,5 +1,6 @@
 package com.example.tmdb_app.APIconnections;
 
+import com.example.tmdb_app.Classes.GenreClass;
 import com.example.tmdb_app.Classes.SearchResults;
 import com.example.tmdb_app.Classes.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
@@ -22,10 +23,9 @@ public interface TMDBservice {
     );
 
     @GET("genre/movie/list")
-    Call<SearchResults> getMovieGenres(
+    Call<GenreClass> getMovieGenres(
             @Query("api_key") String key,
             @Query("language") String language
     );
-
 
 }

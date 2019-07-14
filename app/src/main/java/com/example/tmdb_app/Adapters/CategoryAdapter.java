@@ -39,7 +39,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public void onBindViewHolder(@NonNull HolderCategory holder, int position) {
+    public void onBindViewHolder(@NonNull final HolderCategory holder, final int position) {
 
         if( true ) {
             holder.getCategoryName().setText(categories.get(position));
@@ -57,7 +57,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
             holder.getImagesContainer().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    c.startActivity(new Intent(c, Main2Activity.class));
+                    Intent intent = new Intent(c, Main2Activity.class);
+
+                    String cat = categories.get(position);
+                    switch (cat){
+                        case "Popular":
+                            intent.putExtra("category", "popular");
+                            break;
+                        case "Top Rated":
+                            intent.putExtra("category", "top_rated");
+                            break;
+                        case "Upcoming":
+                            intent.putExtra("category", "upcoming");
+                            break;
+                    }
+
+                    c.startActivity(intent);
                 }
             });
         }
