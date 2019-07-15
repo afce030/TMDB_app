@@ -25,10 +25,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_favorite:
-                // User chose the "Settings" item, show the app settings UI...
-                Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.popular:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "ok1", Toast.LENGTH_SHORT).show();

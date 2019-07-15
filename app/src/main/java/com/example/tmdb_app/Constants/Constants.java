@@ -7,5 +7,7 @@ public abstract class Constants {
     public static final String baseCover = "http://image.tmdb.org/t/p/w185/";
     public static final String baseCoverBig = "http://image.tmdb.org/t/p/w780/";
 
+    //Link base para el buscador
+    public static final String baseSearch = "https://api.themoviedb.org/3/";
 
 }

@@ -28,4 +28,12 @@ public interface TMDBservice {
             @Query("language") String language
     );
 
+    //Método de buscador
+    @GET("/search/multi")
+    Call<GenreClass> getPatternResults(
+            @Query("api_key") String key,
+            @Query("query") String pattern
+    );
+
+
 }
