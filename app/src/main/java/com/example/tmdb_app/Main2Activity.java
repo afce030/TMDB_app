@@ -13,9 +13,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Adapters.MoviesAdapter;
@@ -76,9 +76,12 @@ public class Main2Activity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
 
                 if(newText.length() > 0) {
+                    lySearch.setVisibility(View.VISIBLE);
                     lySearch.bringToFront();
                     getMultiContent(newText);
                     return true;
+                }else{
+                    lySearch.setVisibility(View.INVISIBLE);
                 }
 
                 return false;
@@ -94,8 +97,13 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         lySearch = findViewById(R.id.lySearchTool);
+        lySearch.setVisibility(View.INVISIBLE);
+
         Toolbar myToolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(myToolbar);
+        //Adicionando el botón back
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intencion = getIntent();
 
@@ -257,8 +265,8 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onSuccess(List<MultiContent> tmdBContent) {
 
-                Toast.makeText(Main2Activity.this, String.valueOf(tmdBContent.size()), Toast.LENGTH_SHORT).show();
                 multiContentAdapter.ModifyContents(tmdBContent);
+                multiContentAdapter.setGenres(MoviesGenres);
 
             }
         });
@@ -277,4 +285,11 @@ public class Main2Activity extends AppCompatActivity {
         rvMovies.clearOnScrollListeners();
         finish();
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 }

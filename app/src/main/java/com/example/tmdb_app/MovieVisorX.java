@@ -47,7 +47,6 @@ public class MovieVisorX extends AppCompatActivity {
         release = findViewById(R.id.tvReleaseIC2);
         genders = findViewById(R.id.tvGendersIC2);
         adults = findViewById(R.id.tvAdultIC2);
-        trailer = findViewById(R.id.tvTrailerIC2);
 
         Intent intencion = getIntent();
         poster = intencion.getStringExtra("poster");

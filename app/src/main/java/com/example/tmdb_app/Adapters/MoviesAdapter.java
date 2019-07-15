@@ -2,9 +2,11 @@ package com.example.tmdb_app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,15 +56,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
     public void onBindViewHolder(@NonNull HolderMovies holder, int position) {
 
         Glide.with(c).
-                load( Constants.baseCover+movies.get(position).getPosterPath())
+                load(Constants.baseCover + movies.get(position).getPosterPath())
                 .into(holder.getCover());
 
-        holder.getMovieName().setText( movies.get(position).getTitle() );
-        holder.getReleaseDate().setText( movies.get(position).getReleaseDate() );
+        holder.getMovieName().setText(movies.get(position).getTitle());
+        holder.getReleaseDate().setText(movies.get(position).getReleaseDate());
 
         List<Long> L = movies.get(position).getGenreIds();
         List<Genre_ids> names = new ArrayList<>();
-        for (Long i : L){
+        for (Long i : L) {
             List<Genre_ids> result = genres.stream()
                     .filter(item -> item.getId() == i.intValue())
                     .collect(Collectors.toList());
@@ -70,36 +72,39 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         }
 
         holder.getGenres().setText("");
-        String generos="";
-        for(Genre_ids item: names) {
+        String generos = "";
+        for (Genre_ids item : names) {
             generos += item.getName() + ", ";
         }
 
-        final String generosF= generos.substring(0,generos.length()-2);
-        holder.getGenres().setText(generosF);
-
+        String generosF = "No Info";
+        if(generos.length() > 0) {
+            generosF = generos.substring(0, generos.length() - 2);
+            holder.getGenres().setText(generosF);
+        }
 
         final float average = movies.get(position).getVoteAverage();
-        holder.getRating().setText( String.valueOf(average)+"/10" );
-        holder.getRatingBar().setRating(average/2);
+        holder.getRating().setText(String.valueOf(average) + "/10");
+        holder.getRatingBar().setRating(average / 2);
 
+        String finalGenerosF = generosF;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(c, MovieVisorX.class);
 
-                intent.putExtra("poster", Constants.baseCoverBig+movies.get(position).getPosterPath());
+                intent.putExtra("poster", Constants.baseCoverBig + movies.get(position).getPosterPath());
                 intent.putExtra("name", movies.get(position).getTitle());
                 intent.putExtra("rating", String.valueOf(average));
                 intent.putExtra("overview", movies.get(position).getOverview());
-                intent.putExtra("genres", generosF);
+                intent.putExtra("genres", finalGenerosF);
                 intent.putExtra("release", movies.get(position).getReleaseDate());
                 intent.putExtra("adults", movies.get(position).getAdult());
 
                 c.startActivity(intent);
             }
-        });
 
+        });
     }
 
     @Override

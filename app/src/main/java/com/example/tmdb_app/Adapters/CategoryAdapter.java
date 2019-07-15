@@ -73,12 +73,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
                             break;
                     }
 
-                    try{
-                        c.startActivity(intent);
-                    }
-                    catch (Exception ex){
-                        Toast.makeText(c, "Error de conexión", Toast.LENGTH_SHORT).show();
-                    }
+
+                    c.startActivity(intent);
+
                 }
             });
         }
