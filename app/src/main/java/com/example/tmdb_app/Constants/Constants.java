@@ -6,5 +6,6 @@ public abstract class Constants {
     public static final String base = "https://api.themoviedb.org/3/";
     public static final String baseCover = "http://image.tmdb.org/t/p/w185/";
     public static final String baseCoverBig = "http://image.tmdb.org/t/p/w780/";
+    public static final String youtubeApi = "AIzaSyBQcuNPFSqLA4kEZ0_RhZEqhT94PwXhr_g";
 
 }

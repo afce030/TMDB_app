@@ -22,9 +22,9 @@ public class MovieVisorX extends AppCompatActivity {
     private TextView genders;
     private TextView release;
     private TextView adults;
-    private TextView trailer;
 
     private Button atras;
+    private Button verTrailer;
 
     private String poster;
     private String nombre;
@@ -40,6 +40,7 @@ public class MovieVisorX extends AppCompatActivity {
         setContentView(R.layout.activity_movie_visor_x);
 
         atras = findViewById(R.id.btnAtras);
+        verTrailer = findViewById(R.id.btnVerTrailer);
         cover = findViewById(R.id.ivMoviePhotoIC2);
         name = findViewById(R.id.tvMovieNameIC2);
         rating = findViewById(R.id.tvRatingIC2);
@@ -63,6 +64,14 @@ public class MovieVisorX extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        verTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MovieVisorX.this, TrailerVisor.class);
+                startActivity(intent);
             }
         });
     }
