@@ -17,24 +17,28 @@ import com.example.tmdb_app.Adapters.CategoryAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Actividad principal del proyecto que muestra las tres categorias de películas
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
+
 public class MenuPrincipal extends AppCompatActivity {
 
-    private RecyclerView rvCategories;
+    private RecyclerView rvCategories;//Muestra las tres categorias: popular, top y upcoming
     private CategoryAdapter categoryAdapter;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.popular:
-                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "ok1", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.topRated:
-                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "ok2", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.upcoming:
-                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "ok3", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -61,10 +65,12 @@ public class MenuPrincipal extends AppCompatActivity {
 
         rvCategories = findViewById(R.id.rvCategories);
 
+        //Función para configurar el adaptador del menú principal
         adapter();
 
     }
 
+    //Función para configurar el adaptador y ponerle las imágenes
     void adapter(){
 
         List<String> categories = new ArrayList<>();
@@ -75,6 +81,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
         List<List<Integer>> imagesList  = new ArrayList<>();
 
+        //Se agregan las iḿagenes a cada categoria del adapter
         List<Integer> popularMovies = new ArrayList<>();
         popularMovies.add(R.drawable.popular1);
         popularMovies.add(R.drawable.popular2);
@@ -90,18 +97,18 @@ public class MenuPrincipal extends AppCompatActivity {
         upcomingMovies.add(R.drawable.estreno2);
         imagesList.add(upcomingMovies);
 
+        //Se construye el adaptador
         categoryAdapter = new CategoryAdapter(MenuPrincipal.this,categories,imagesList);
-
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
 
         //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decoration_categories));
 
+        //Se inicia el adaptador
         rvCategories.setLayoutManager(l);
         rvCategories.addItemDecoration(dividerItemDecoration);
         rvCategories.setAdapter(categoryAdapter);
-        rvCategories.getRecycledViewPool().setMaxRecycledViews(0,0);
 
     }
 }
