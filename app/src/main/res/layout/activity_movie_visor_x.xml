@@ -30,7 +30,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/rounded_button"
-                    android:text="Atrás"
+                    android:text="@string/btnAtras"
                     android:textAllCaps="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/rounded_button"
-                    android:text="Ver Trailer"
+                    android:text="@string/seeTrailer"
                     android:textAllCaps="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
-        android:text="Atrás"
+        android:text="@string/btnAtras"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded_button"
-        android:text="Reproducir"
+        android:text="@string/btnReproducir"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

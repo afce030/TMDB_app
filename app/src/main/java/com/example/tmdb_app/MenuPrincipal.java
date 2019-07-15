@@ -17,7 +17,7 @@ import com.example.tmdb_app.Adapters.CategoryAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MenuPrincipal extends AppCompatActivity {
 
     private RecyclerView rvCategories;
     private CategoryAdapter categoryAdapter;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu_principal);
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     void adapter(){
 
         List<String> categories = new ArrayList<>();
+
         categories.add("Popular");
         categories.add("Top Rated");
         categories.add("Upcoming");
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         upcomingMovies.add(R.drawable.estreno2);
         imagesList.add(upcomingMovies);
 
-        categoryAdapter = new CategoryAdapter(MainActivity.this,categories,imagesList);
+        categoryAdapter = new CategoryAdapter(MenuPrincipal.this,categories,imagesList);
 
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
 
