@@ -100,6 +100,7 @@ public class MultiContentAdapter extends RecyclerView.Adapter<HolderMultiContent
             public void onClick(View v) {
                 Intent intent = new Intent(c, MovieVisorX.class);
 
+                intent.putExtra("id", String.valueOf(content.get(position).getId()));
                 intent.putExtra("poster", Constants.baseCoverBig + content.get(position).getPosterPath());
                 intent.putExtra("name", content.get(position).getTitle());
                 intent.putExtra("rating", String.valueOf(finalAverage));

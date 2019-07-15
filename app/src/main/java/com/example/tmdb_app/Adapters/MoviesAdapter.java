@@ -93,6 +93,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
             public void onClick(View v) {
                 Intent intent = new Intent(c, MovieVisorX.class);
 
+                intent.putExtra("id", String.valueOf(movies.get(position).getId()));
                 intent.putExtra("poster", Constants.baseCoverBig + movies.get(position).getPosterPath());
                 intent.putExtra("name", movies.get(position).getTitle());
                 intent.putExtra("rating", String.valueOf(average));

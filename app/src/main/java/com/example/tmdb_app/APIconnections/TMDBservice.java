@@ -4,6 +4,7 @@ import com.example.tmdb_app.Classes.GenreClass;
 import com.example.tmdb_app.Classes.SearchResults;
 import com.example.tmdb_app.Classes.SearchResultsMulti;
 import com.example.tmdb_app.Classes.TMDBmovie;
+import com.example.tmdb_app.Classes.TrailerResults;
 import com.example.tmdb_app.Constants.Constants;
 
 import java.util.List;
@@ -36,5 +37,11 @@ public interface TMDBservice {
             @Query("query") String pattern
     );
 
+    @GET("movie/{movie_id}/videos")
+    Call<TrailerResults> getMovieTrailer(
+            @Path("movie_id") String idMovie,
+            @Query("api_key") String key,
+            @Query("language") String language
+    );
 
 }
