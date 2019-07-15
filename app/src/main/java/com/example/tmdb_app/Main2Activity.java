@@ -1,5 +1,6 @@
 package com.example.tmdb_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.tmdb_app.APIconnections.TMDBservice;
@@ -33,9 +35,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Main2Activity extends AppCompatActivity {
 
     private RecyclerView rvMovies;
-    private MoviesAdapter moviesAdapter;
+    private MoviesAdapter moviesAdapter = new MoviesAdapter(Main2Activity.this, new ArrayList<>(), new ArrayList<>());
     private String Lang = "es"; //Default language
     private List<Genre_ids> MoviesGenres = new ArrayList<>();
+
+    int current = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,35 @@ public class Main2Activity extends AppCompatActivity {
 
         rvMovies = findViewById(R.id.rvMovies);
         getGenres(Lang);
-        getMovies(intencion.getStringExtra("category"),Lang, 1);
+
+        final String cat = intencion.getStringExtra("category");
+        getMovies(cat,Lang, current);
+
+        LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
+
+        //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decoration_categories));
+
+        rvMovies.setLayoutManager(l);
+        rvMovies.addItemDecoration(dividerItemDecoration);
+        rvMovies.setAdapter(moviesAdapter);
+
+        rvMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(dy > 0){
+                    // Bajando
+                    if(recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN) == false){
+                        //Final
+                        current += 1;
+                        getMovies(cat,Lang, current);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -82,7 +114,10 @@ public class Main2Activity extends AppCompatActivity {
         task.addOnSuccessListener(new OnSuccessListener<List<Genre_ids>>() {
             @Override
             public void onSuccess(List<Genre_ids> genre_ids) {
+
                 MoviesGenres.addAll(genre_ids);
+                moviesAdapter.setGenres(MoviesGenres);
+
             }
         });
 
@@ -122,18 +157,23 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onSuccess(List<TMDBmovie> tmdBmovies) {
 
-                moviesAdapter = new MoviesAdapter(Main2Activity.this, tmdBmovies, MoviesGenres);
-                LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
+                moviesAdapter.addElements(tmdBmovies);
 
-                //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
-                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decoration_categories));
-
-                rvMovies.setLayoutManager(l);
-                rvMovies.addItemDecoration(dividerItemDecoration);
-                rvMovies.setAdapter(moviesAdapter);
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        rvMovies.clearOnScrollListeners();
+        finish();
     }
 }

@@ -41,6 +41,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         return new HolderMovies(vista);
     }
 
+    public void setGenres(List<Genre_ids> genres) {
+        this.genres = genres;
+    }
+
+    public void addElements(List<TMDBmovie> m){
+        this.movies.addAll(m);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull HolderMovies holder, int position) {
 

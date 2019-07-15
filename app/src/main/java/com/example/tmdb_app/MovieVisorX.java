@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.net.URL;
+
 public class MovieVisorX extends AppCompatActivity {
 
     private RoundedImageView cover;
@@ -20,6 +22,7 @@ public class MovieVisorX extends AppCompatActivity {
     private TextView genders;
     private TextView release;
     private TextView adults;
+    private TextView trailer;
 
     private Button atras;
 
@@ -44,6 +47,7 @@ public class MovieVisorX extends AppCompatActivity {
         release = findViewById(R.id.tvReleaseIC2);
         genders = findViewById(R.id.tvGendersIC2);
         adults = findViewById(R.id.tvAdultIC2);
+        trailer = findViewById(R.id.tvTrailerIC2);
 
         Intent intencion = getIntent();
         poster = intencion.getStringExtra("poster");
