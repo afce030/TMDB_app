@@ -2,6 +2,7 @@ package com.example.tmdb_app.APIconnections;
 
 import com.example.tmdb_app.Classes.GenreClass;
 import com.example.tmdb_app.Classes.SearchResults;
+import com.example.tmdb_app.Classes.SearchResultsMulti;
 import com.example.tmdb_app.Classes.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 
@@ -29,8 +30,8 @@ public interface TMDBservice {
     );
 
     //Método de buscador
-    @GET("/search/multi")
-    Call<GenreClass> getPatternResults(
+    @GET("search/multi")
+    Call<SearchResultsMulti> getPatternResults(
             @Query("api_key") String key,
             @Query("query") String pattern
     );

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,17 +13,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Adapters.MoviesAdapter;
+import com.example.tmdb_app.Adapters.MultiContentAdapter;
 import com.example.tmdb_app.Classes.GenreClass;
 import com.example.tmdb_app.Classes.Genre_ids;
+import com.example.tmdb_app.Classes.MultiContent;
 import com.example.tmdb_app.Classes.SearchResults;
+import com.example.tmdb_app.Classes.SearchResultsMulti;
 import com.example.tmdb_app.Classes.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,11 +43,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Main2Activity extends AppCompatActivity {
 
     private RecyclerView rvMovies;
+    private RecyclerView rvQuery;
+
     private MoviesAdapter moviesAdapter = new MoviesAdapter(Main2Activity.this, new ArrayList<>(), new ArrayList<>());
+    private MultiContentAdapter multiContentAdapter = new MultiContentAdapter(Main2Activity.this, new ArrayList<>());
+
     private String Lang = "es"; //Default language
     private List<Genre_ids> MoviesGenres = new ArrayList<>();
 
     int current = 1;
+
+    private LinearLayout lySearch;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,8 +74,14 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(Main2Activity.this, "ok", Toast.LENGTH_SHORT).show();
-                return true;
+
+                if(newText.length() > 0) {
+                    lySearch.bringToFront();
+                    getMultiContent(newText);
+                    return true;
+                }
+
+                return false;
             }
         });
 
@@ -81,11 +93,13 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        lySearch = findViewById(R.id.lySearchTool);
         Toolbar myToolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(myToolbar);
 
         Intent intencion = getIntent();
 
+        rvQuery = findViewById(R.id.rvQuery);
         rvMovies = findViewById(R.id.rvMovies);
         getGenres(Lang);
 
@@ -101,6 +115,15 @@ public class Main2Activity extends AppCompatActivity {
         rvMovies.setLayoutManager(l);
         rvMovies.addItemDecoration(dividerItemDecoration);
         rvMovies.setAdapter(moviesAdapter);
+
+        LinearLayoutManager l2 = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
+        //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
+        DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
+        dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decoration_categories));
+
+        rvQuery.setLayoutManager(l2);
+        rvQuery.addItemDecoration(dividerItemDecoration2);
+        rvQuery.setAdapter(multiContentAdapter);
 
         rvMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -196,6 +219,46 @@ public class Main2Activity extends AppCompatActivity {
             public void onSuccess(List<TMDBmovie> tmdBmovies) {
 
                 moviesAdapter.addElements(tmdBmovies);
+
+            }
+        });
+
+    }
+
+    void getMultiContent(String pattern){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.base)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TMDBservice service = retrofit.create(TMDBservice.class);
+
+        Call<SearchResultsMulti> call = service.getPatternResults(Constants.api_key, pattern);
+
+        final TaskCompletionSource<List<MultiContent>> completionSource = new TaskCompletionSource<>();
+        call.enqueue(new Callback<SearchResultsMulti>() {
+            @Override
+            public void onResponse(Call<SearchResultsMulti> call, Response<SearchResultsMulti> response) {
+
+                SearchResultsMulti search = response.body();
+                completionSource.setResult(search.getResults());
+
+            }
+
+            @Override
+            public void onFailure(Call<SearchResultsMulti> call, Throwable t) {
+
+            }
+        });
+
+        Task<List<MultiContent>> task = completionSource.getTask();
+        task.addOnSuccessListener(new OnSuccessListener<List<MultiContent>>() {
+            @Override
+            public void onSuccess(List<MultiContent> tmdBContent) {
+
+                Toast.makeText(Main2Activity.this, String.valueOf(tmdBContent.size()), Toast.LENGTH_SHORT).show();
+                multiContentAdapter.ModifyContents(tmdBContent);
 
             }
         });
