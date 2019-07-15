@@ -44,6 +44,7 @@ public class MovieVisorX extends AppCompatActivity {
     private Button verTrailer;
 
     private String movieID;
+    private String mediaType;
     private String poster;
     private String nombre;
     private String calificacion;
@@ -69,6 +70,7 @@ public class MovieVisorX extends AppCompatActivity {
 
         Intent intencion = getIntent();
         movieID = intencion.getStringExtra("id");
+        mediaType = intencion.getStringExtra("media");
         poster = intencion.getStringExtra("poster");
         nombre = intencion.getStringExtra("name");
         calificacion = intencion.getStringExtra("rating");
@@ -89,7 +91,12 @@ public class MovieVisorX extends AppCompatActivity {
         verTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTrailer(movieID);
+                if(mediaType.toLowerCase().equals("movie")){
+                    getTrailer(movieID);
+                }
+                else{
+                    Toast.makeText(MovieVisorX.this, "Trailer solo disponible para películas", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -101,7 +108,13 @@ public class MovieVisorX extends AppCompatActivity {
         rating.setText(calificacion);
         overview.setText(resumen);
         genders.setText(generos);
-        release.setText(estreno);
+
+        //Release solo disponible para peliculas
+        if(mediaType.toLowerCase().equals("movie")) {
+            release.setText(estreno);
+        }else {
+            release.setText("No disponible");
+        }
 
         if(adultos){
             adults.setText("Sí");
