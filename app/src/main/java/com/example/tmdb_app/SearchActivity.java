@@ -20,12 +20,12 @@ import android.widget.SearchView;
 import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Adapters.MultiContentAdapter;
-import com.example.tmdb_app.Classes.GenreClass;
-import com.example.tmdb_app.Classes.Genre_ids;
-import com.example.tmdb_app.Classes.MultiContent;
-import com.example.tmdb_app.Classes.SearchResults;
-import com.example.tmdb_app.Classes.SearchResultsMulti;
-import com.example.tmdb_app.Classes.TMDBmovie;
+import com.example.tmdb_app.Classes.ConsultaGeneros.GenreClass;
+import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
+import com.example.tmdb_app.Classes.ConsultaHibrida.MultiContent;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.SearchResultsMovies;
+import com.example.tmdb_app.Classes.ConsultaHibrida.SearchResultsMulti;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,13 +40,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Main2Activity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     private RecyclerView rvMovies;
     private RecyclerView rvQuery;
 
-    private MoviesAdapter moviesAdapter = new MoviesAdapter(Main2Activity.this, new ArrayList<>(), new ArrayList<>());
-    private MultiContentAdapter multiContentAdapter = new MultiContentAdapter(Main2Activity.this, new ArrayList<>());
+    private MoviesAdapter moviesAdapter = new MoviesAdapter(SearchActivity.this, new ArrayList<>(), new ArrayList<>());
+    private MultiContentAdapter multiContentAdapter = new MultiContentAdapter(SearchActivity.this, new ArrayList<>());
 
     private String Lang = "es"; //Default language
     private List<Genre_ids> MoviesGenres = new ArrayList<>();
@@ -201,21 +201,21 @@ public class Main2Activity extends AppCompatActivity {
 
         TMDBservice service = retrofit.create(TMDBservice.class);
 
-        Call<SearchResults> call = service.getMoviesByType(category,Constants.api_key,language,page);
+        Call<SearchResultsMovies> call = service.getMoviesByType(category,Constants.api_key,language,page);
 
         final TaskCompletionSource<List<TMDBmovie>> completionSource = new TaskCompletionSource<>();
 
-        call.enqueue(new Callback<SearchResults>() {
+        call.enqueue(new Callback<SearchResultsMovies>() {
             @Override
-            public void onResponse(Call<SearchResults> call, Response<SearchResults> response) {
+            public void onResponse(Call<SearchResultsMovies> call, Response<SearchResultsMovies> response) {
 
-                SearchResults search = response.body();
+                SearchResultsMovies search = response.body();
                 completionSource.setResult(search.getResults());
 
             }
 
             @Override
-            public void onFailure(Call<SearchResults> call, Throwable t) {
+            public void onFailure(Call<SearchResultsMovies> call, Throwable t) {
 
             }
         });

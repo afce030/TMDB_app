@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">TMDB_app</string>
+
+    <string name="btnAtras">Atrás</string>
+    <string name="btnReproducir">Reproducir</string>
+    <string name="seeTrailer">Ver Trailer</string>
+    <string name="popular">Popular</string>
+    <string name="topRated">Top Rated</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="trailerNotice">Trailer solo disponible para películas</string>
+
 </resources>

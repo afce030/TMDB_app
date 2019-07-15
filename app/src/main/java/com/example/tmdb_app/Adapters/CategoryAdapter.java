@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.tmdb_app.Holders.HolderCategory;
-import com.example.tmdb_app.Main2Activity;
+import com.example.tmdb_app.SearchActivity;
 import com.example.tmdb_app.R;
 
 import java.util.List;
@@ -58,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
             holder.getImagesContainer().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(c, Main2Activity.class);
+                    Intent intent = new Intent(c, SearchActivity.class);
 
                     String cat = categories.get(position);
                     switch (cat){

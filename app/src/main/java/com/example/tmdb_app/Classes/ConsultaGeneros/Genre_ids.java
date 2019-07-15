@@ -1,4 +1,4 @@
-package com.example.tmdb_app.Classes;
+package com.example.tmdb_app.Classes.ConsultaGeneros;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

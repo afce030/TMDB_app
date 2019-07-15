@@ -2,18 +2,16 @@ package com.example.tmdb_app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tmdb_app.Classes.Genre_ids;
-import com.example.tmdb_app.Classes.TMDBmovie;
+import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
 import com.example.tmdb_app.Constants.Constants;
 import com.example.tmdb_app.Holders.HolderMovies;
 import com.example.tmdb_app.MovieVisorX;

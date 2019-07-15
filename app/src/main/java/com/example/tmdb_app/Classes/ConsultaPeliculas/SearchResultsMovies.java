@@ -1,10 +1,11 @@
-package com.example.tmdb_app.Classes;
+package com.example.tmdb_app.Classes.ConsultaPeliculas;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchResults {
+public class SearchResultsMovies {
 
     @SerializedName("page")
     @Expose

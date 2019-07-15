@@ -11,17 +11,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tmdb_app.APIconnections.TMDBservice;
-import com.example.tmdb_app.Classes.GenreClass;
-import com.example.tmdb_app.Classes.Genre_ids;
-import com.example.tmdb_app.Classes.TrailerClass;
-import com.example.tmdb_app.Classes.TrailerResults;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.TrailerClass;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.TrailerResults;
 import com.example.tmdb_app.Constants.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;
@@ -154,15 +151,18 @@ public class MovieVisorX extends AppCompatActivity {
             @Override
             public void onSuccess(List<TrailerClass> trailerClasses) {
 
-                if(trailerClasses.get(0).getSite().toLowerCase().equals("youtube")) {
-                    String key = trailerClasses.get(0).getKey();
-                    Intent intent = new Intent(MovieVisorX.this, TrailerVisor.class);
-                    intent.putExtra("key", key);
-                    startActivity(intent);
+                switch ( String.valueOf(trailerClasses.get(0).getSite()) ){
+                    case "YouTube":
+                        String key = trailerClasses.get(0).getKey();
+                        Intent intent = new Intent(MovieVisorX.this, TrailerVisor.class);
+                        intent.putExtra("key", key);
+                        startActivity(intent);
+                        break;
+                    default:
+                        Toast.makeText(MovieVisorX.this, "Trailer no disponible", Toast.LENGTH_SHORT).show();
+                        break;
                 }
-                else {
-                    Toast.makeText(MovieVisorX.this, "Trailer no disponible", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 

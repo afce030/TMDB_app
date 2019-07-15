@@ -10,15 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tmdb_app.Classes.Genre_ids;
-import com.example.tmdb_app.Classes.MultiContent;
+import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
+import com.example.tmdb_app.Classes.ConsultaHibrida.MultiContent;
 import com.example.tmdb_app.Constants.Constants;
 import com.example.tmdb_app.Holders.HolderMultiContent;
 import com.example.tmdb_app.MovieVisorX;
 import com.example.tmdb_app.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,21 +70,24 @@ public class MultiContentAdapter extends RecyclerView.Adapter<HolderMultiContent
 
         List<Integer> L = content.get(position).getGenreIds();
         List<Genre_ids> names = new ArrayList<>();
-        for (Integer i : L) {
-            List<Genre_ids> result = genres.stream()
-                    .filter(item -> item.getId() == i)
-                    .collect(Collectors.toList());
-            names.addAll(result);
-        }
-
-        String generos = "";
-        for (Genre_ids item : names) {
-            generos += item.getName() + ", ";
-        }
 
         String generosF = "No Info";
-        if(generos.length() > 0) {
-            generosF = generos.substring(0, generos.length() - 2);
+        if(!(L == null)) {
+            for (Integer i : L) {
+                List<Genre_ids> result = genres.stream()
+                        .filter(item -> item.getId() == i)
+                        .collect(Collectors.toList());
+                names.addAll(result);
+            }
+
+            String generos = "";
+            for (Genre_ids item : names) {
+                generos += item.getName() + ", ";
+            }
+
+            if (generos.length() > 0) {
+                generosF = generos.substring(0, generos.length() - 2);
+            }
         }
 
         double average = 0;
