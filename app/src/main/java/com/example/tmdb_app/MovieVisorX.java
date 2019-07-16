@@ -10,12 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Classes.ConsultaTrailers.TrailerClass;
 import com.example.tmdb_app.Classes.ConsultaTrailers.TrailerResults;
 import com.example.tmdb_app.Classes.ConsultaTrailers.TrailersWS;
 import com.example.tmdb_app.Components.DaggerRetrofitComponent;
-import com.example.tmdb_app.Components.RetrofitComponent;
 import com.example.tmdb_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -29,8 +27,6 @@ import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieVisorX extends AppCompatActivity {
 

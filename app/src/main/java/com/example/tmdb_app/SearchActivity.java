@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
-import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Adapters.MultiContentAdapter;
 import com.example.tmdb_app.Classes.ConsultaGeneros.GenreResults;
@@ -43,8 +42,6 @@ import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchActivity extends AppCompatActivity {
 
