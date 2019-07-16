@@ -5,6 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/*
+Clase que se obtiene luego de desglosar el atributo List<MultiContent> results de la clase SearchResultsMulti
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
+
 public class MultiContent {
 
     @SerializedName("original_name")

@@ -5,6 +5,15 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*
+Clase que se obtiene luego de usar el menu principal para buscar populares, top o upcoming
+
+Se obtiene una lista (List<TMDBmovie> results) donde está la información de las películas
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
+
 public class SearchResultsMovies {
 
     @SerializedName("page")

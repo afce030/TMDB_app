@@ -11,15 +11,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tmdb_app.APIconnections.TMDBservice;
-import com.example.tmdb_app.Classes.ConsultaPeliculas.TrailerClass;
-import com.example.tmdb_app.Classes.ConsultaPeliculas.TrailerResults;
-import com.example.tmdb_app.Constants.Constants;
+import com.example.tmdb_app.Classes.ConsultaTrailers.TrailerClass;
+import com.example.tmdb_app.Classes.ConsultaTrailers.TrailerResults;
+import com.example.tmdb_app.Classes.ConsultaTrailers.TrailersWS;
+import com.example.tmdb_app.Components.DaggerRetrofitComponent;
+import com.example.tmdb_app.Components.RetrofitComponent;
+import com.example.tmdb_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,10 +55,15 @@ public class MovieVisorX extends AppCompatActivity {
     private String estreno;
     private boolean adultos;
 
+    @Inject
+    TrailersWS trailerService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_visor_x);
+
+        DaggerRetrofitComponent.create().inject(this);
 
         atras = findViewById(R.id.btnAtras);
         verTrailer = findViewById(R.id.btnVerTrailer);
@@ -121,15 +131,8 @@ public class MovieVisorX extends AppCompatActivity {
 
     void getTrailer(String id){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.base)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TMDBservice service = retrofit.create(TMDBservice.class);
-
         String language = "en-US";
-        Call<TrailerResults> call = service.getMovieTrailer(id, Constants.api_key, language);
+        Call<TrailerResults> call = trailerService.getMovieTrailer(id, Constants.api_key, language);
 
         final TaskCompletionSource<List<TrailerClass>> completionSource = new TaskCompletionSource<>();
         call.enqueue(new Callback<TrailerResults>() {

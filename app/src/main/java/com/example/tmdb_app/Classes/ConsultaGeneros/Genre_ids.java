@@ -3,6 +3,13 @@ package com.example.tmdb_app.Classes.ConsultaGeneros;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*
+Clase que se obtiene luego de extraer el atributo genres de la clase GenreResults
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
+
 public class Genre_ids {
 
     @SerializedName("id")

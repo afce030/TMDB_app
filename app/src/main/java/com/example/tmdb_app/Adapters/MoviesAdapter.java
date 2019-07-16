@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
 import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
-import com.example.tmdb_app.Constants.Constants;
+import com.example.tmdb_app.Utilities.Constants;
 import com.example.tmdb_app.Holders.HolderMovies;
 import com.example.tmdb_app.MovieVisorX;
 import com.example.tmdb_app.R;
@@ -112,7 +112,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
                 //Intent usado para enviar la información a la siguiente actividad
                 Intent intent = new Intent(c, MovieVisorX.class);
 
-                intent.putExtra("id", String.valueOf(movies.get(position).getId()));
+                intent.putExtra("id", String.valueOf(movies.get(position).getId()));//Usado para consultar el trailer en el siguiente activity
                 intent.putExtra("media", "movie");
                 intent.putExtra("poster", Constants.baseCoverBig + movies.get(position).getPosterPath());
                 intent.putExtra("name", movies.get(position).getTitle());

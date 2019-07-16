@@ -1,4 +1,4 @@
-package com.example.tmdb_app.Constants;
+package com.example.tmdb_app.Utilities;
 
 public abstract class Constants {
 

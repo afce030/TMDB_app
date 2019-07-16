@@ -2,8 +2,16 @@ package com.example.tmdb_app.Classes.ConsultaHibrida;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
+
+/*
+Clase que se obtiene luego de usar el buscador
+
+Se obtiene una lista (List<MultiContent> results) donde está la información de los contenidos disponibles
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
 
 public class SearchResultsMulti {
 

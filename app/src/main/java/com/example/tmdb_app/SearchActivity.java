@@ -20,19 +20,25 @@ import android.widget.SearchView;
 import com.example.tmdb_app.APIconnections.TMDBservice;
 import com.example.tmdb_app.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Adapters.MultiContentAdapter;
-import com.example.tmdb_app.Classes.ConsultaGeneros.GenreClass;
+import com.example.tmdb_app.Classes.ConsultaGeneros.GenreResults;
 import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
+import com.example.tmdb_app.Classes.ConsultaGeneros.GenresWS;
 import com.example.tmdb_app.Classes.ConsultaHibrida.MultiContent;
+import com.example.tmdb_app.Classes.ConsultaHibrida.MultiContentWS;
 import com.example.tmdb_app.Classes.ConsultaPeliculas.SearchResultsMovies;
 import com.example.tmdb_app.Classes.ConsultaHibrida.SearchResultsMulti;
 import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
-import com.example.tmdb_app.Constants.Constants;
+import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovieWS;
+import com.example.tmdb_app.Components.DaggerRetrofitComponent;
+import com.example.tmdb_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +47,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchActivity extends AppCompatActivity {
+
+    @Inject
+    TMDBmovieWS movieService;
+
+    @Inject
+    GenresWS genresService;
+
+    @Inject
+    MultiContentWS searchService;
 
     private RecyclerView rvMovies;
     private RecyclerView rvQuery;
@@ -95,6 +110,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        DaggerRetrofitComponent.create().inject(this);
 
         lySearch = findViewById(R.id.lySearchTool);
         lySearch.setVisibility(View.INVISIBLE);
@@ -153,27 +170,20 @@ public class SearchActivity extends AppCompatActivity {
 
     void getGenres(String language){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.base)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TMDBservice service = retrofit.create(TMDBservice.class);
-
-        Call<GenreClass> call = service.getMovieGenres(Constants.api_key,language);
+        Call<GenreResults> call = genresService.getMovieGenres(Constants.api_key,language);
 
         final TaskCompletionSource<List<Genre_ids>> completionSource = new TaskCompletionSource<>();
-        call.enqueue(new Callback<GenreClass>() {
+        call.enqueue(new Callback<GenreResults>() {
             @Override
-            public void onResponse(Call<GenreClass> call, Response<GenreClass> response) {
+            public void onResponse(Call<GenreResults> call, Response<GenreResults> response) {
 
-                GenreClass genreClass = response.body();
-                completionSource.setResult(genreClass.getGenres());
+                GenreResults genreResults = response.body();
+                completionSource.setResult(genreResults.getGenres());
 
             }
 
             @Override
-            public void onFailure(Call<GenreClass> call, Throwable t) {
+            public void onFailure(Call<GenreResults> call, Throwable t) {
 
             }
         });
@@ -194,14 +204,7 @@ public class SearchActivity extends AppCompatActivity {
 
     void getMovies(String category, String language, long page){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.base)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TMDBservice service = retrofit.create(TMDBservice.class);
-
-        Call<SearchResultsMovies> call = service.getMoviesByType(category,Constants.api_key,language,page);
+        Call<SearchResultsMovies> call = movieService.getMoviesByType(category,Constants.api_key,language,page);
 
         final TaskCompletionSource<List<TMDBmovie>> completionSource = new TaskCompletionSource<>();
 
@@ -235,14 +238,7 @@ public class SearchActivity extends AppCompatActivity {
 
     void getMultiContent(String pattern){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.base)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        TMDBservice service = retrofit.create(TMDBservice.class);
-
-        Call<SearchResultsMulti> call = service.getPatternResults(Constants.api_key, pattern);
+        Call<SearchResultsMulti> call = searchService.getPatternResults(Constants.api_key, pattern);
 
         final TaskCompletionSource<List<MultiContent>> completionSource = new TaskCompletionSource<>();
         call.enqueue(new Callback<SearchResultsMulti>() {

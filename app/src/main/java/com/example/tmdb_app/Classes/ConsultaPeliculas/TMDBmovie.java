@@ -4,6 +4,13 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/*
+Clase que se obtiene luego de desglosar el atributo List<TMDBmovie> results de la clase SearchResultsMovies
+
+Fecha: 15/07/2919
+Elaborado por: Andrés Cardona
+*/
+
 public class TMDBmovie {
 
     @SerializedName("vote_count")

@@ -1,4 +1,4 @@
-package com.example.tmdb_app.Classes.ConsultaPeliculas;
+package com.example.tmdb_app.Classes.ConsultaTrailers;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
