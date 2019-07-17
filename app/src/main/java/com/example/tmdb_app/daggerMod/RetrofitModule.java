@@ -1,4 +1,4 @@
-package com.example.tmdb_app.Modules;
+package com.example.tmdb_app.daggerMod;
 
 import com.example.tmdb_app.Classes.ConsultaGeneros.GenresWS;
 import com.example.tmdb_app.Classes.ConsultaHibrida.MultiContentWS;

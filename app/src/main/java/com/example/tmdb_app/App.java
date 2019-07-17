@@ -2,9 +2,8 @@ package com.example.tmdb_app;
 
 import android.app.Application;
 
-import com.example.tmdb_app.Components.DaggerRetrofitComponent;
-import com.example.tmdb_app.Components.RetrofitComponent;
-import com.example.tmdb_app.Modules.RetrofitModule;
+import com.example.tmdb_app.daggerComp.DaggerRetrofitComponent;
+import com.example.tmdb_app.daggerComp.RetrofitComponent;
 
 public class App extends Application {
 

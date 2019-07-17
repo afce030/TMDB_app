@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tmdb_app.Classes.ConsultaGeneros.Genre_ids;
-import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
+import com.example.tmdb_app.RoomEntities.MoviesEntity;
 import com.example.tmdb_app.Utilities.Constants;
 import com.example.tmdb_app.Holders.HolderMovies;
 import com.example.tmdb_app.MovieVisorX;
@@ -33,10 +33,10 @@ Elaborado por: Andrés Cardona
 public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
     private Context c;//Se importa el contexto para mostrar el cover de cada película
-    private List<TMDBmovie> movies;//Lista que contiene la información de cada película
+    private List<MoviesEntity> movies;//Lista que contiene la información de cada película
     private List<Genre_ids> genres;//Lista que contiene todos los géneros existentes
 
-    public MoviesAdapter(Context c, List<TMDBmovie> movies, List<Genre_ids> genres) {
+    public MoviesAdapter(Context c, List<MoviesEntity> movies, List<Genre_ids> genres) {
         this.c = c;
         this.movies = movies;
         this.genres = genres;
@@ -56,9 +56,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
     }
 
     //Función para agregar elementos al adaptador (se usa cuando se hace la paginación)
-    public void addElements(List<TMDBmovie> m){
-        this.movies.addAll(m);
-        notifyDataSetChanged();//Actualiza la información
+    public void addElements(List<MoviesEntity> m){
+        if(m != null) {
+            this.movies = new ArrayList<>();
+            this.movies.addAll(m);
+            notifyDataSetChanged();//Actualiza la información
+        }
     }
 
     @Override

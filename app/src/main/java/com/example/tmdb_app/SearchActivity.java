@@ -1,21 +1,20 @@
 package com.example.tmdb_app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.tmdb_app.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Adapters.MultiContentAdapter;
@@ -28,8 +27,10 @@ import com.example.tmdb_app.Classes.ConsultaPeliculas.SearchResultsMovies;
 import com.example.tmdb_app.Classes.ConsultaHibrida.SearchResultsMulti;
 import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovie;
 import com.example.tmdb_app.Classes.ConsultaPeliculas.TMDBmovieWS;
-import com.example.tmdb_app.Components.DaggerRetrofitComponent;
+import com.example.tmdb_app.RoomEntities.MoviesEntity;
 import com.example.tmdb_app.Utilities.Constants;
+import com.example.tmdb_app.Viewmodels.SearchActivityViewModel;
+import com.example.tmdb_app.daggerComp.DaggerRetrofitComponent;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
@@ -67,6 +68,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private LinearLayout lySearch;
 
+    private SearchActivityViewModel searchActivityViewModel;
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
@@ -102,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
 
         return true;
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
         getGenres(Lang);
 
         final String cat = intencion.getStringExtra("category");
-        getMovies(cat,Lang, current);
+        //getMovies(cat,Lang, current);
 
         LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
 
@@ -138,6 +141,18 @@ public class SearchActivity extends AppCompatActivity {
         rvMovies.addItemDecoration(dividerItemDecoration);
         rvMovies.setAdapter(moviesAdapter);
 
+        searchActivityViewModel = ViewModelProviders.of(this).get(SearchActivityViewModel.class);
+        searchActivityViewModel.getMovies().observe(this, new Observer<List<MoviesEntity>>() {
+            @Override
+            public void onChanged(List<MoviesEntity> moviesEntities) {
+                moviesAdapter.addElements(moviesEntities);
+            }
+        });
+
+        moviesAdapter.addElements(searchActivityViewModel.getMovies().getValue());
+        //moviesAdapter.addElements(tmdBmovies);
+
+/*
         LinearLayoutManager l2 = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
         //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
         DividerItemDecoration dividerItemDecoration2 = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
@@ -146,7 +161,9 @@ public class SearchActivity extends AppCompatActivity {
         rvQuery.setLayoutManager(l2);
         rvQuery.addItemDecoration(dividerItemDecoration2);
         rvQuery.setAdapter(multiContentAdapter);
+*/
 
+        /*
         rvMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -162,6 +179,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+        */
 
     }
 
@@ -226,7 +244,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<TMDBmovie> tmdBmovies) {
 
-                moviesAdapter.addElements(tmdBmovies);
+                //moviesAdapter.addElements(tmdBmovies);
 
             }
         });
