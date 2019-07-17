@@ -7,7 +7,7 @@
     android:background="@color/colorBlack"
     android:foreground="@drawable/shape_post">
 
-    <com.example.tmdb_app.Extended_libraries.sliderLayoutNoSwipe
+    <com.example.tmdb_app.Activities.Extended_libraries.sliderLayoutNoSwipe
         android:id="@+id/slShowLabel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,6 +45,6 @@
 
         </LinearLayout>
 
-    </com.example.tmdb_app.Extended_libraries.sliderLayoutNoSwipe>
+    </com.example.tmdb_app.Activities.Extended_libraries.sliderLayoutNoSwipe>
 
 </LinearLayout>
