@@ -7,9 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.tmdb_app.LocalData.RoomDAO.MoviesDAO;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.LocalData.RoomEntities.MoviesEntity;
 
-@Database(entities = {MoviesEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {MoviesEntity.class, GenresEntity.class}, version = 1, exportSchema = false)
 public abstract class MoviesDatabase extends RoomDatabase {
 
     private static MoviesDatabase moviesDatabase = null;
@@ -26,6 +27,5 @@ public abstract class MoviesDatabase extends RoomDatabase {
         }
         return moviesDatabase;
     }
-
 
 }

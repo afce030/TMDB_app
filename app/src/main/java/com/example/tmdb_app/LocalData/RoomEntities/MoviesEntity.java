@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.tmdb_app.LocalData.RoomConverters.ListConverter;
+import com.example.tmdb_app.LocalData.RoomConverters.GenreListConverter;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class MoviesEntity {
     private String posterPath;
     private String originalLanguage;
     private String originalTitle;
-    @TypeConverters(ListConverter.class)
+    @TypeConverters(GenreListConverter.class)
     private List<Long> genreIds;
     private String backdropPath;
     private Boolean adult;
@@ -33,7 +33,9 @@ public class MoviesEntity {
     private int isTop;
     private int isUpcoming;
 
-    public MoviesEntity(Long id, Long voteCount, Boolean video, Float voteAverage, String title, Float popularity, String posterPath, String originalLanguage, String originalTitle, List<Long> genreIds, String backdropPath, Boolean adult, String overview, String releaseDate, int isPopular, int isTop, int isUpcoming) {
+    private int page;
+
+    public MoviesEntity(Long id, Long voteCount, Boolean video, Float voteAverage, String title, Float popularity, String posterPath, String originalLanguage, String originalTitle, List<Long> genreIds, String backdropPath, Boolean adult, String overview, String releaseDate, int isPopular, int isTop, int isUpcoming, int page) {
         this.id = id;
         this.voteCount = voteCount;
         this.video = video;
@@ -51,6 +53,7 @@ public class MoviesEntity {
         this.isPopular = isPopular;
         this.isTop = isTop;
         this.isUpcoming = isUpcoming;
+        this.page = page;
     }
 
     public Long getId() {
@@ -119,5 +122,9 @@ public class MoviesEntity {
 
     public int isUpcoming() {
         return isUpcoming;
+    }
+
+    public int getPage() {
+        return page;
     }
 }

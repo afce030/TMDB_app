@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.PojoClasses.ConsultaGeneros.Genre_ids;
 import com.example.tmdb_app.LocalData.RoomEntities.MoviesEntity;
 import com.example.tmdb_app.Utilities.Constants;
@@ -34,9 +35,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
     private Context c;//Se importa el contexto para mostrar el cover de cada película
     private List<MoviesEntity> movies;//Lista que contiene la información de cada película
-    private List<Genre_ids> genres;//Lista que contiene todos los géneros existentes
+    private List<GenresEntity> genres;//Lista que contiene todos los géneros existentes
 
-    public MoviesAdapter(Context c, List<MoviesEntity> movies, List<Genre_ids> genres) {
+    public MoviesAdapter(Context c, List<MoviesEntity> movies, List<GenresEntity> genres) {
         this.c = c;
         this.movies = movies;
         this.genres = genres;
@@ -51,14 +52,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
     }
 
     //Función para traer la lista de géneros de películas dependiendo del idioma(español en este caso)
-    public void setGenres(List<Genre_ids> genres) {
+    public void setGenres(List<GenresEntity> genres) {
         this.genres = genres;
     }
 
     //Función para agregar elementos al adaptador (se usa cuando se hace la paginación)
     public void addElements(List<MoviesEntity> m){
+        this.movies = new ArrayList<>();
         if(m != null) {
-            this.movies = new ArrayList<>();
             this.movies.addAll(m);
             notifyDataSetChanged();//Actualiza la información
         }
@@ -78,10 +79,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
         //El fragmento siguiente hasta la linea 96 se usa para obtener los géneros de cada película
         List<Long> L = movies.get(position).getGenreIds();
-        List<Genre_ids> names = new ArrayList<>();
+        List<GenresEntity> names = new ArrayList<>();
+
         //Loop utilizado para recorrer los géneros que trae la película y obtener los nombres
         for (Long i : L) {
-            List<Genre_ids> result = genres.stream()
+            List<GenresEntity> result = genres.stream()
                     .filter(item -> item.getId() == i.intValue())
                     .collect(Collectors.toList());
             names.addAll(result);
@@ -90,7 +92,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         holder.getGenres().setText("");
         String generos = "";
         //Loop usado para mostrar los géneros en el item
-        for (Genre_ids item : names) {
+        for (GenresEntity item : names) {
             generos += item.getName() + ", ";
         }
 

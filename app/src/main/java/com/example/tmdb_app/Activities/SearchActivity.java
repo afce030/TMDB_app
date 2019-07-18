@@ -1,8 +1,10 @@
 package com.example.tmdb_app.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.example.tmdb_app.Activities.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Activities.Adapters.MultiContentAdapter;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.PojoClasses.ConsultaGeneros.GenreResults;
 import com.example.tmdb_app.PojoClasses.ConsultaGeneros.Genre_ids;
 import com.example.tmdb_app.APIconnections.GenresWS;
@@ -125,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
 
         rvQuery = findViewById(R.id.rvQuery);
         rvMovies = findViewById(R.id.rvMovies);
-        getGenres(Lang);
+        //getGenres(Lang);
 
         final String cat = intencion.getStringExtra("category");
         //getMovies(cat,Lang, current);
@@ -141,6 +144,7 @@ public class SearchActivity extends AppCompatActivity {
         rvMovies.setAdapter(moviesAdapter);
 
         searchActivityViewModel = ViewModelProviders.of(this).get(SearchActivityViewModel.class);
+        searchActivityViewModel.setCategory(cat);
         searchActivityViewModel.getMovies().observe(this, new Observer<List<MoviesEntity>>() {
             @Override
             public void onChanged(List<MoviesEntity> moviesEntities) {
@@ -148,8 +152,27 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        moviesAdapter.addElements(searchActivityViewModel.getMovies().getValue());
-        //moviesAdapter.addElements(tmdBmovies);
+        searchActivityViewModel.getGenresMovies().observe(this, new Observer<List<GenresEntity>>() {
+            @Override
+            public void onChanged(List<GenresEntity> genresEntities) {
+                moviesAdapter.setGenres(genresEntities);
+            }
+        });
+
+        rvMovies.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0){
+                    // Bajando
+                    if(recyclerView.canScrollVertically(RecyclerView.FOCUS_DOWN) == false){
+                        //Final
+                        current += 1;
+                        searchActivityViewModel.setPage(current);
+                    }
+                }
+            }
+        });
 
 /*
         LinearLayoutManager l2 = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
@@ -208,8 +231,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<Genre_ids> genre_ids) {
 
-                MoviesGenres.addAll(genre_ids);
-                moviesAdapter.setGenres(MoviesGenres);
+                //MoviesGenres.addAll(genre_ids);
+                //moviesAdapter.setGenres(MoviesGenres);
 
             }
         });

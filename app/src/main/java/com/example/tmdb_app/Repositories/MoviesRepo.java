@@ -5,6 +5,11 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.tmdb_app.APIconnections.GenresWS;
+import com.example.tmdb_app.APIconnections.TrailersWS;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
+import com.example.tmdb_app.PojoClasses.ConsultaGeneros.GenreResults;
+import com.example.tmdb_app.PojoClasses.ConsultaGeneros.Genre_ids;
 import com.example.tmdb_app.PojoClasses.ConsultaPeliculas.SearchResultsMovies;
 import com.example.tmdb_app.PojoClasses.ConsultaPeliculas.TMDBmovie;
 import com.example.tmdb_app.APIconnections.TMDBmovieWS;
@@ -24,27 +29,49 @@ import retrofit2.Response;
 
 public class MoviesRepo {
     private MoviesDAO moviesDAO;
-    private LiveData<List<MoviesEntity>> allMovies;
+    private LiveData<List<MoviesEntity>> foundMovies;
+    private LiveData<List<GenresEntity>> foundGenres;
 
     @Inject
     TMDBmovieWS tmdBmovieWS;//This parameter is injected by the Retrofit Module
+
+    @Inject
+    GenresWS genresWS;//This parameter is injected by the Retrofit Module
+
+    @Inject
+    TrailersWS trailersWS;//This parameter is injected by the Retrofit Module
+
 
     public MoviesRepo(Application application) {
         DaggerRetrofitComponent.create().inject(this);
 
         MoviesDatabase moviesDatabase = MoviesDatabase.getInstance(application);
         moviesDAO = moviesDatabase.moviesDAO();
-        allMovies = moviesDAO.getPopularMovies();
 
+        foundGenres = GenresByLanguage();
+        foundMovies = moviesDAO.getPopularMovies();
     }
 
-    public LiveData<List<MoviesEntity>> getPopular(){
-        getPopularWS();
-        return allMovies;
-    }
 
-    public void getPopularWS(){
-        Call<SearchResultsMovies> call = tmdBmovieWS.getMoviesByType("popular", Constants.API_KEY,"es",1);
+    public LiveData<List<MoviesEntity>> getMoviesByCategory(String category, Integer page){
+        refreshMovies(category, page);
+
+        switch (category){
+            case "popular":
+                foundMovies = moviesDAO.getPopularMovies();
+                break;
+            case "top_rated":
+                foundMovies = moviesDAO.getTopMovies();
+                break;
+            case "upcoming":
+                foundMovies = moviesDAO.getUpcomingMovies();
+                break;
+        }
+
+        return foundMovies;
+    }
+    void refreshMovies(String category, int page){
+        Call<SearchResultsMovies> call = tmdBmovieWS.getMoviesByType(category, Constants.API_KEY,"es",page);
 
         call.enqueue(new Callback<SearchResultsMovies>() {
             @Override
@@ -52,42 +79,53 @@ public class MoviesRepo {
 
                 List<TMDBmovie> g = response.body().getResults();
 
-                for(TMDBmovie i: g) {
+                for(TMDBmovie item: g) {
 
-                    LiveData<List<MoviesEntity>> x = moviesDAO.getMovieByID(i.getId());
-
+                    int popular = 0;
                     int top = 0;
                     int upcoming = 0;
 
-                    if(x.getValue() != null){
-                        top = x.getValue().get(0).isTop();
-                        upcoming = x.getValue().get(0).isUpcoming();
+                    if(moviesDAO.getMovieByID(item.getId()).getValue() != null) {
+                        MoviesEntity x = moviesDAO.getMovieByID(item.getId()).getValue().get(0);
+                        popular = x.isPopular();
+                        top = x.isTop();
+                        upcoming = x.isUpcoming();
                     }
 
-                    MoviesEntity m = new MoviesEntity(
-                            i.getId(),
-                            i.getVoteCount(),
-                            i.getVideo(),
-                            i.getVoteAverage(),
-                            i.getTitle(),
-                            i.getPopularity(),
-                            i.getPosterPath(),
-                            i.getOriginalLanguage(),
-                            i.getOriginalTitle(),
-                            i.getGenreIds(),
-                            i.getBackdropPath(),
-                            i.getAdult(),
-                            i.getOverview(),
-                            i.getReleaseDate(),
-                            1,
+                    switch (category){
+                        case "popular":
+                            popular = 1;
+                            break;
+                        case "top_rated":
+                            top = 1;
+                            break;
+                        case "upcoming":
+                            upcoming = 1;
+                            break;
+                    }
+
+                    MoviesEntity moviesEntity = new MoviesEntity(
+                            item.getId(),
+                            item.getVoteCount(),
+                            item.getVideo(),
+                            item.getVoteAverage(),
+                            item.getTitle(),
+                            item.getPopularity(),
+                            item.getPosterPath(),
+                            item.getOriginalLanguage(),
+                            item.getOriginalTitle(),
+                            item.getGenreIds(),
+                            item.getBackdropPath(),
+                            item.getAdult(),
+                            item.getOverview(),
+                            item.getReleaseDate(),
+                            popular,
                             top,
-                            upcoming);
+                            upcoming,
+                            page);
 
-                    new insertBackground(moviesDAO).execute(m);
-
+                    new insertMoviesBackground(moviesDAO).execute(moviesEntity);
                 }
-
-                allMovies = moviesDAO.getPopularMovies();
             }
 
             @Override
@@ -95,13 +133,46 @@ public class MoviesRepo {
 
             }
         });
+
     }
 
-    private static class insertBackground extends AsyncTask<MoviesEntity, Void, Void> {
+
+    public LiveData<List<GenresEntity>> GenresByLanguage(){
+        refreshGenres("es");
+        return moviesDAO.obtainGenres();
+    }
+    void refreshGenres(String language){
+        Call<GenreResults> call = genresWS.getMovieGenres(Constants.API_KEY, language);
+
+        call.enqueue(new Callback<GenreResults>() {
+            @Override
+            public void onResponse(Call<GenreResults> call, Response<GenreResults> response) {
+
+                List<Genre_ids> g = response.body().getGenres();
+
+                for(Genre_ids item : g){
+
+                    GenresEntity genresEntity = new GenresEntity(item.getId(), item.getName());
+
+                    new insertGenresBackground(moviesDAO).execute(genresEntity);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GenreResults> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private static class insertMoviesBackground extends AsyncTask<MoviesEntity, Void, Void> {
 
         private MoviesDAO moviesDAO;
 
-        public insertBackground(MoviesDAO moviesDAO) {
+        public insertMoviesBackground(MoviesDAO moviesDAO) {
             this.moviesDAO = moviesDAO;
         }
 
@@ -111,4 +182,20 @@ public class MoviesRepo {
             return null;
         }
     }
+
+    private static class insertGenresBackground extends AsyncTask<GenresEntity, Void, Void> {
+
+        private MoviesDAO moviesDAO;
+
+        public insertGenresBackground(MoviesDAO moviesDAO) {
+            this.moviesDAO = moviesDAO;
+        }
+
+        @Override
+        protected Void doInBackground(GenresEntity... genresEntities) {
+            moviesDAO.insertGenre(genresEntities[0]);
+            return null;
+        }
+    }
+
 }

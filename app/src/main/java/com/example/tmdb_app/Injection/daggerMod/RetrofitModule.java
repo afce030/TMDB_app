@@ -3,6 +3,7 @@ package com.example.tmdb_app.Injection.daggerMod;
 import com.example.tmdb_app.APIconnections.GenresWS;
 import com.example.tmdb_app.APIconnections.MultiContentWS;
 import com.example.tmdb_app.APIconnections.TMDBmovieWS;
+import com.example.tmdb_app.APIconnections.TMDBserieWS;
 import com.example.tmdb_app.APIconnections.TrailersWS;
 import com.example.tmdb_app.Utilities.Constants;
 
@@ -37,6 +38,13 @@ public class RetrofitModule {
     @Singleton
     TMDBmovieWS provideMovie(Retrofit retrofit){
         TMDBmovieWS service = retrofit.create(TMDBmovieWS.class);
+        return service;
+    }
+
+    @Provides
+    @Singleton
+    TMDBserieWS provideSerie(Retrofit retrofit){
+        TMDBserieWS service = retrofit.create(TMDBserieWS.class);
         return service;
     }
 
