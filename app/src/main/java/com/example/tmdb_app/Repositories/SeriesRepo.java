@@ -48,7 +48,7 @@ public class SeriesRepo {
         foundSeries = SeriesDAO.getPopularSeries();
     }
 
-
+    //se obtienen las series y se almacenan localmente
     public LiveData<List<SeriesEntity>> getSeriesByCategory(String category, Integer page){
         refreshSeries(category, page);
 
@@ -122,6 +122,7 @@ public class SeriesRepo {
         refreshGenres("es");
         return SeriesDAO.obtainGenres();
     }
+    //Función para obtener los géneros desde TMDB
     void refreshGenres(String language){
 
         Call<GenreResults> call = genresWS.getSerieGenres(Constants.API_KEY, language);
@@ -150,7 +151,7 @@ public class SeriesRepo {
     }
 
 
-
+    //Funciones para buscar series mediante una palabra clave
     public LiveData<List<SeriesEntity>> SearchSeries(String pattern){
         refreshMoviesByPattern(pattern);
         return SeriesDAO.getpattern("%"+pattern+"%");
@@ -169,7 +170,6 @@ public class SeriesRepo {
 
                         int popular = 0;
                         int top = 0;
-                        int upcoming = 0;
                         int pagina = 1;
 
                         SeriesEntity SeriesEntity = new SeriesEntity(
@@ -205,8 +205,7 @@ public class SeriesRepo {
 
     }
 
-
-
+    //Se introducen las series en la base de datos local
     private static class insertSeriesBackground extends AsyncTask<SeriesEntity, Void, Void> {
 
         private SeriesDAO seriesDAO;
@@ -234,7 +233,7 @@ public class SeriesRepo {
             }            return null;
         }
     }
-
+    //Se inserta la tabla de géneros en la base de datos local
     private static class insertGenresBackground extends AsyncTask<GenresEntity, Void, Void> {
 
         private SeriesDAO SeriesDAO;

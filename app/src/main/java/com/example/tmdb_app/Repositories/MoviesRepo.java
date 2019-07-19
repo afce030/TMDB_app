@@ -43,7 +43,7 @@ public class MoviesRepo {
     @Inject
     TrailersWS trailersWS;//This parameter is injected by the Retrofit Module
 
-
+    //Constructor
     public MoviesRepo(Application application) {
         DaggerRetrofitComponent.create().inject(this);
 
@@ -54,9 +54,9 @@ public class MoviesRepo {
         foundMovies = moviesDAO.getPopularMovies();
     }
 
-
+    //Función para obtener películas populares, top o estrenos
     public LiveData<List<MoviesEntity>> getMoviesByCategory(String category, Integer page){
-        refreshMovies(category, page);
+        refreshMovies(category, page);//Se obtienen desde TMDB si hay conexión
 
         switch (category){
             case "popular":
@@ -72,6 +72,8 @@ public class MoviesRepo {
 
         return foundMovies;
     }
+
+    //Se obtienen peliculas por categoria desde TMDB
     void refreshMovies(String category, int page){
         Call<SearchResultsMovies> call = tmdBmovieWS.getMoviesByType(category, Constants.API_KEY,"es",page);
 
@@ -131,11 +133,13 @@ public class MoviesRepo {
 
     }
 
-
+    //Función para obtener los todos los géneros de películas posibles
     public LiveData<List<GenresEntity>> GenresByLanguage(){
         refreshGenres("es");
         return moviesDAO.obtainGenres();
     }
+
+    //Función para traer los géneros desde TMDB
     void refreshGenres(String language){
         Call<GenreResults> call = genresWS.getMovieGenres(Constants.API_KEY, language);
 
@@ -164,7 +168,7 @@ public class MoviesRepo {
     }
 
 
-
+    //Funciones para buscar películas mediante una palabra clave
     public LiveData<List<MoviesEntity>> SearchMovies(String pattern){
         refreshMoviesByPattern(pattern);
         return moviesDAO.getpattern("%"+pattern+"%");
@@ -222,7 +226,7 @@ public class MoviesRepo {
 
     }
 
-
+    //Funciones para acceder a la base de datos local desde un hilo diferente al principal
     private static class insertMoviesBackground extends AsyncTask<MoviesEntity, Void, Void> {
 
         private MoviesDAO moviesDAO;
@@ -255,6 +259,7 @@ public class MoviesRepo {
         }
     }
 
+    //Función para insertar la tabla de géneros en la base de datos local
     private static class insertGenresBackground extends AsyncTask<GenresEntity, Void, Void> {
 
         private MoviesDAO moviesDAO;

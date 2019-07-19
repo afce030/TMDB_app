@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface GenresWS {
 
-    //Obtener los géneros
+    //Obtener las películas
     @GET("genre/movie/list")
     Call<GenreResults> getMovieGenres(
             @Query("api_key") String key,

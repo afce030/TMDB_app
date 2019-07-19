@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.tmdb_app.Activities.Adapters.MoviesAdapter;
 import com.example.tmdb_app.Activities.Adapters.MultiContentAdapter;
@@ -26,38 +25,21 @@ import com.example.tmdb_app.Activities.Adapters.SeriesAdapter;
 import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.LocalData.RoomEntities.SeriesEntity;
 import com.example.tmdb_app.PojoClasses.ConsultaGeneros.Genre_ids;
-import com.example.tmdb_app.PojoClasses.ConsultaHibrida.MultiContent;
-import com.example.tmdb_app.APIconnections.MultiContentWS;
-import com.example.tmdb_app.PojoClasses.ConsultaHibrida.SearchResultsMulti;
 import com.example.tmdb_app.R;
 import com.example.tmdb_app.LocalData.RoomEntities.MoviesEntity;
-import com.example.tmdb_app.Utilities.Constants;
 import com.example.tmdb_app.Business.Viewmodels.SearchActivityViewModel;
-import com.example.tmdb_app.Injection.daggerComp.DaggerRetrofitComponent;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class SearchActivity extends AppCompatActivity {
-
-    @Inject
-    MultiContentWS searchService;
 
     private RecyclerView rvMovies;
     private RecyclerView rvQuery;
 
     private MoviesAdapter moviesAdapter = new MoviesAdapter(SearchActivity.this, new ArrayList<>(), new ArrayList<>());
     private SeriesAdapter seriesAdapter = new SeriesAdapter(SearchActivity.this, new ArrayList<>(), new ArrayList<>());
-    private MultiContentAdapter multiContentAdapter = new MultiContentAdapter(SearchActivity.this, "series");
+    private MultiContentAdapter multiContentAdapter = new MultiContentAdapter(SearchActivity.this, "movies");
 
     private List<Genre_ids> MoviesGenres = new ArrayList<>();
     int current = 1;
@@ -105,8 +87,6 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        DaggerRetrofitComponent.create().inject(this);
-
 
         Toolbar myToolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(myToolbar);

@@ -77,6 +77,7 @@ public class MultiContentAdapter extends RecyclerView.Adapter<HolderMultiContent
         List<Long> L = new ArrayList<>();
         double average = 0;
 
+        //Sí es una película
         if(type.equals("movies")) {
 
             //Se muestra la imagen del cover
@@ -97,6 +98,7 @@ public class MultiContentAdapter extends RecyclerView.Adapter<HolderMultiContent
             }
 
         }
+        //Sí es una serie
         else if(type.equals("series")){
 
             //Se muestra la imagen del cover
@@ -151,7 +153,7 @@ public class MultiContentAdapter extends RecyclerView.Adapter<HolderMultiContent
                 switch (type){
                     case "movies":
                         intent.putExtra("id", String.valueOf(contentMovies.get(position).getId()));//Usado para consultar el trailer
-                        intent.putExtra("media", type);
+                        intent.putExtra("media", "movie");
                         intent.putExtra("poster", Constants.BASE_COVER_BIG + contentMovies.get(position).getPosterPath());
                         intent.putExtra("name", contentMovies.get(position).getTitle());
                         intent.putExtra("rating", String.valueOf(finalAverage));

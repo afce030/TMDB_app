@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="260dp"
     android:background="#000"
     android:orientation="vertical">
 
@@ -54,9 +54,9 @@
                     android:id="@+id/tvGenresIC1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:text="Actionxxxxxxxxxxxxxxxxxxxxx"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"/>
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Calificación: "
-                        android:textSize="20sp"/>
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tvRatingIC1"
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="7/10"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 

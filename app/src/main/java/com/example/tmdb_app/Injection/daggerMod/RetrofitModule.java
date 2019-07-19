@@ -1,7 +1,6 @@
 package com.example.tmdb_app.Injection.daggerMod;
 
 import com.example.tmdb_app.APIconnections.GenresWS;
-import com.example.tmdb_app.APIconnections.MultiContentWS;
 import com.example.tmdb_app.APIconnections.TMDBmovieWS;
 import com.example.tmdb_app.APIconnections.TMDBserieWS;
 import com.example.tmdb_app.APIconnections.TrailersWS;
@@ -59,13 +58,6 @@ public class RetrofitModule {
     @Singleton
     TrailersWS provideTrailer(Retrofit retrofit){
         TrailersWS service = retrofit.create(TrailersWS.class);
-        return service;
-    }
-
-    @Provides
-    @Singleton
-    MultiContentWS provideContent(Retrofit retrofit){
-        MultiContentWS service = retrofit.create(MultiContentWS.class);
         return service;
     }
 
