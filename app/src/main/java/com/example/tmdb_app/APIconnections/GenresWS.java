@@ -15,4 +15,11 @@ public interface GenresWS {
             @Query("language") String language
     );
 
+    //Obtener los géneros
+    @GET("genre/tv/list")
+    Call<GenreResults> getSerieGenres(
+            @Query("api_key") String key,
+            @Query("language") String language
+    );
+
 }

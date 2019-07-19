@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieVisorX extends AppCompatActivity {
+public class MovieVisor extends AppCompatActivity {
 
     private RoundedImageView cover;
     private TextView name;
@@ -99,7 +99,7 @@ public class MovieVisorX extends AppCompatActivity {
                     getTrailer(movieID);
                 }
                 else{
-                    Toast.makeText(MovieVisorX.this, "Trailer solo disponible para películas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MovieVisor.this, "Trailer solo disponible para películas", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -107,9 +107,9 @@ public class MovieVisorX extends AppCompatActivity {
 
     void asignarInfo() {
 
-        Glide.with(MovieVisorX.this).load(poster).into(cover);
+        Glide.with(MovieVisor.this).load(poster).into(cover);
         name.setText(nombre);
-        rating.setText(calificacion);
+        rating.setText(calificacion.substring(0,3));//Se toman los primero 3 para evitar que salgan muchos numeros
         overview.setText(resumen);
         genders.setText(generos);
 
@@ -142,7 +142,7 @@ public class MovieVisorX extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<TrailerResults> call, Throwable t) {
-                Toast.makeText(MovieVisorX.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MovieVisor.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -154,12 +154,12 @@ public class MovieVisorX extends AppCompatActivity {
                 switch ( String.valueOf(trailerClasses.get(0).getSite()) ){
                     case "YouTube":
                         String key = trailerClasses.get(0).getKey();
-                        Intent intent = new Intent(MovieVisorX.this, TrailerVisor.class);
+                        Intent intent = new Intent(MovieVisor.this, TrailerVisor.class);
                         intent.putExtra("key", key);
                         startActivity(intent);
                         break;
                     default:
-                        Toast.makeText(MovieVisorX.this, "Trailer no disponible", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MovieVisor.this, "Trailer no disponible", Toast.LENGTH_SHORT).show();
                         break;
                 }
 

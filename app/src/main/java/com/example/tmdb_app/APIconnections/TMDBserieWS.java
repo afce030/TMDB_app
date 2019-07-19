@@ -18,4 +18,13 @@ public interface TMDBserieWS {
             @Query("page") long page
     );
 
+    //Obteniendo series populares, top o upcoming
+    @GET("search/tv")
+    Call<SearchResultsTV> getSeriesByQuery(
+            @Query("query") String pattern,
+            @Query("api_key") String key,
+            @Query("language") String language,
+            @Query("page") long page
+    );
+
 }

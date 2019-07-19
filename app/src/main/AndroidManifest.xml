@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.TrailerVisor"></activity>
-        <activity android:name=".Activities.MovieVisorX" />
+        <activity android:name=".Activities.MovieVisor" />
         <activity android:name=".Activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

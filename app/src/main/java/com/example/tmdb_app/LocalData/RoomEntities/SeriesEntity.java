@@ -28,12 +28,14 @@ public class SeriesEntity {
     private Double voteAverage;
     private String overview;
     private String posterPath;
+
     //Declaring the type of serie among: Popular, Top or Upcoming
     private int isPopular;
     private int isTop;
-    private int isUpcoming;
 
-    public SeriesEntity(Integer id, String originalName, List<Long> genreIds, String name, Double popularity, List<String> originCountry, Integer voteCount, String firstAirDate, String backdropPath, String originalLanguage, Double voteAverage, String overview, String posterPath, int isPopular, int isTop, int isUpcoming) {
+    private int page;
+
+    public SeriesEntity(Integer id, String originalName, List<Long> genreIds, String name, Double popularity, List<String> originCountry, Integer voteCount, String firstAirDate, String backdropPath, String originalLanguage, Double voteAverage, String overview, String posterPath, int isPopular, int isTop, int page) {
         this.id = id;
         this.originalName = originalName;
         this.genreIds = genreIds;
@@ -49,7 +51,7 @@ public class SeriesEntity {
         this.posterPath = posterPath;
         this.isPopular = isPopular;
         this.isTop = isTop;
-        this.isUpcoming = isUpcoming;
+        this.page = page;
     }
 
     public Integer getId() {
@@ -112,7 +114,7 @@ public class SeriesEntity {
         return isTop;
     }
 
-    public int getIsUpcoming() {
-        return isUpcoming;
+    public int getPage() {
+        return page;
     }
 }

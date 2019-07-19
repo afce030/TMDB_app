@@ -10,11 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
-import com.example.tmdb_app.LocalData.RoomEntities.MoviesEntity;
-import com.example.tmdb_app.Utilities.Constants;
 import com.example.tmdb_app.Activities.Holders.HolderMovies;
 import com.example.tmdb_app.Activities.MovieVisor;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
+import com.example.tmdb_app.LocalData.RoomEntities.SeriesEntity;
+import com.example.tmdb_app.Utilities.Constants;
 import com.example.tmdb_app.R;
 
 import java.util.ArrayList;
@@ -30,15 +30,15 @@ Fecha: 15/07/2919
 Elaborado por: Andrés Cardona
 */
 
-public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
+public class SeriesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
     private Context c;//Se importa el contexto para mostrar el cover de cada película
-    private List<MoviesEntity> movies;//Lista que contiene la información de cada película
+    private List<SeriesEntity> series;//Lista que contiene la información de cada película
     private List<GenresEntity> genres;//Lista que contiene todos los géneros existentes
 
-    public MoviesAdapter(Context c, List<MoviesEntity> movies, List<GenresEntity> genres) {
+    public SeriesAdapter(Context c, List<SeriesEntity> series, List<GenresEntity> genres) {
         this.c = c;
-        this.movies = movies;
+        this.series = series;
         this.genres = genres;
     }
 
@@ -56,10 +56,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
     }
 
     //Función para agregar elementos al adaptador (se usa cuando se hace la paginación)
-    public void addElements(List<MoviesEntity> m){
-        this.movies = new ArrayList<>();
+    public void addElements(List<SeriesEntity> m){
+        this.series = new ArrayList<>();
         if(m != null) {
-            this.movies.addAll(m);
+            this.series.addAll(m);
             notifyDataSetChanged();//Actualiza la información
         }
     }
@@ -69,15 +69,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
         //Se asgina el cover a la imagen
         Glide.with(c).
-                load(Constants.BASE_COVER + movies.get(position).getPosterPath())
+                load(Constants.BASE_COVER + series.get(position).getPosterPath())
                 .into(holder.getCover());
 
         //Se agrega el título y la fecha de estreno en sus respectivos campos
-        holder.getMovieName().setText(movies.get(position).getTitle());
-        holder.getReleaseDate().setText(movies.get(position).getReleaseDate());
+        holder.getMovieName().setText(series.get(position).getName());
+        holder.getReleaseDate().setText(series.get(position).getFirstAirDate());
 
         //El fragmento siguiente hasta la linea 96 se usa para obtener los géneros de cada película
-        List<Long> L = movies.get(position).getGenreIds();
+        List<Long> L = series.get(position).getGenreIds();
         List<GenresEntity> names = new ArrayList<>();
 
         //Loop utilizado para recorrer los géneros que trae la película y obtener los nombres
@@ -103,7 +103,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
         }
 
         //Obteniendo la calificación de los usuarios hacia la película
-        final float average = movies.get(position).getVoteAverage();
+        final float average = series.get(position).getVoteAverage().floatValue();
         holder.getRating().setText(String.valueOf(average) + "/10");
         //La calificaión se divide por 2 para mostrar en un rating bar de 5 estrellas
         holder.getRatingBar().setRating(average / 2);
@@ -116,15 +116,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
                 //Intent usado para enviar la información a la siguiente actividad
                 Intent intent = new Intent(c, MovieVisor.class);
 
-                intent.putExtra("id", String.valueOf(movies.get(position).getId()));//Usado para consultar el trailer en el siguiente activity
-                intent.putExtra("media", "movie");
-                intent.putExtra("poster", Constants.BASE_COVER_BIG + movies.get(position).getPosterPath());
-                intent.putExtra("name", movies.get(position).getTitle());
+                intent.putExtra("id", String.valueOf(series.get(position).getId()));//Usado para consultar el trailer en el siguiente activity
+                intent.putExtra("media", "serie");
+                intent.putExtra("poster", Constants.BASE_COVER_BIG + series.get(position).getPosterPath());
+                intent.putExtra("name", series.get(position).getName());
                 intent.putExtra("rating", String.valueOf(average));
-                intent.putExtra("overview", movies.get(position).getOverview());
+                intent.putExtra("overview", series.get(position).getOverview());
                 intent.putExtra("genres", finalGenerosF);
-                intent.putExtra("release", movies.get(position).getReleaseDate());
-                intent.putExtra("adults", movies.get(position).getAdult());
+                intent.putExtra("release", series.get(position).getFirstAirDate());
+                intent.putExtra("adults", false);
 
                 c.startActivity(intent);
             }
@@ -134,7 +134,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<HolderMovies> {
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return series.size();
     }
 
 }

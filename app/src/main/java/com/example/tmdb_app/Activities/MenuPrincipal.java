@@ -2,21 +2,21 @@ package com.example.tmdb_app.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.tmdb_app.Activities.Adapters.CategoryAdapter;
+import com.example.tmdb_app.Activities.Adapters.viewPagerAdapter;
+import com.example.tmdb_app.Activities.Fragments.MoviesFragment;
+import com.example.tmdb_app.Activities.Fragments.SeriesFragment;
 import com.example.tmdb_app.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.tabs.TabLayout;
 
 /*
 Actividad principal del proyecto que muestra las tres categorias de películas
@@ -25,10 +25,16 @@ Fecha: 15/07/2919
 Elaborado por: Andrés Cardona
 */
 
-public class MenuPrincipal extends AppCompatActivity {
+public class MenuPrincipal extends AppCompatActivity implements MoviesFragment.OnFragmentInteractionListener,
+        SeriesFragment.OnFragmentInteractionListener {
 
     private RecyclerView rvCategories;//Muestra las tres categorias: popular, top y upcoming
     private CategoryAdapter categoryAdapter;
+
+    private ViewPager viewPager;
+    private viewPagerAdapter viewPagerAdapter;
+    private TabLayout tabLayout;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -64,52 +70,17 @@ public class MenuPrincipal extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        rvCategories = findViewById(R.id.rvCategories);
+        viewPager = findViewById(R.id.pager);
+        tabLayout = findViewById(R.id.tabLayout);
 
-        //Función para configurar el adaptador del menú principal
-        adapter();
+        viewPagerAdapter = new viewPagerAdapter(getSupportFragmentManager(),0);
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
-    //Función para configurar el adaptador y ponerle las imágenes
-    void adapter(){
-
-        List<String> categories = new ArrayList<>();
-
-        categories.add("Popular");
-        categories.add("Top Rated");
-        categories.add("Upcoming");
-
-        List<List<Integer>> imagesList  = new ArrayList<>();
-
-        //Se agregan las iḿagenes a cada categoria del adapter
-        List<Integer> popularMovies = new ArrayList<>();
-        popularMovies.add(R.drawable.popular1);
-        popularMovies.add(R.drawable.popular2);
-        imagesList.add(popularMovies);
-
-        List<Integer> topRatedMovies = new ArrayList<>();
-        topRatedMovies.add(R.drawable.top_rated1);
-        topRatedMovies.add(R.drawable.top_rated2);
-        imagesList.add(topRatedMovies);
-
-        List<Integer> upcomingMovies = new ArrayList<>();
-        upcomingMovies.add(R.drawable.estreno1);
-        upcomingMovies.add(R.drawable.estreno2);
-        imagesList.add(upcomingMovies);
-
-        //Se construye el adaptador
-        categoryAdapter = new CategoryAdapter(MenuPrincipal.this,categories,imagesList);
-        LinearLayoutManager l = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
-
-        //Se añade un DividerItemDecoration para aumentar la distancia entre las categorias
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),RecyclerView.VERTICAL);
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.item_decoration_categories));
-
-        //Se inicia el adaptador
-        rvCategories.setLayoutManager(l);
-        rvCategories.addItemDecoration(dividerItemDecoration);
-        rvCategories.setAdapter(categoryAdapter);
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

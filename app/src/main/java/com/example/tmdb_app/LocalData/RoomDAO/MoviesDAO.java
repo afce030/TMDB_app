@@ -1,12 +1,12 @@
 package com.example.tmdb_app.LocalData.RoomDAO;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.LocalData.RoomEntities.MoviesEntity;
@@ -16,14 +16,28 @@ import java.util.List;
 @Dao
 public interface MoviesDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insertMovie(MoviesEntity moviesEntity);
 
     @Delete
     void deleteMovie(MoviesEntity moviesEntity);
 
-    @Update
-    void updateMovie(MoviesEntity moviesEntity);
+
+
+
+    @Query("UPDATE Movies_table set isPopular=:a WHERE id=:id")
+    void updatePopular(Long id, int a);
+
+    @Query("UPDATE Movies_table set isTop=:a WHERE id=:id")
+    void updateTop(Long id, int a);
+
+    @Query("UPDATE Movies_table set isUpcoming=:a WHERE id=:id")
+    void updateUpcoming(Long id, int a);
+
+
+
+    @Query("SELECT * FROM Movies_table")
+    LiveData<List<MoviesEntity>> getAllMovies();
 
     @Query("SELECT * FROM Movies_table WHERE id=:ID")
     LiveData<List<MoviesEntity>> getMovieByID(Long ID);
@@ -46,6 +60,9 @@ public interface MoviesDAO {
     @Query("DELETE FROM Movies_table WHERE isUpcoming = 1")
     void deleteUpcomingMovies();
 
+
+    @Query("SELECT * FROM Movies_table WHERE originalTitle LIKE :pattern OR title LIKE :pattern")
+    LiveData<List<MoviesEntity>> getpattern(String pattern);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

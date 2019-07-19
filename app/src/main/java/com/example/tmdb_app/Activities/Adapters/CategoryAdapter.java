@@ -33,11 +33,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
     private List<String> categories;//Nombres de las categorias
     private List<List<Integer>> imagesList;//Imágenes de cada categoria
 
+    private String typ;
+
     //Constructor
-    public CategoryAdapter(Context c, List<String> categories, List<List<Integer>> imagesList) {
+    public CategoryAdapter(Context c, List<String> categories, List<List<Integer>> imagesList, String typ) {
         this.c = c;
         this.categories = categories;
         this.imagesList = imagesList;
+        this.typ = typ;
     }
 
     @NonNull
@@ -69,6 +72,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<HolderCategory>{
 
                 //Intent usado para cambiar a la siguiente actividad
                 Intent intent = new Intent(c, SearchActivity.class);
+                intent.putExtra("type", typ);
 
                 //Se toma la categoria escogida y se pasa como parámetro a la siguiente actividad
                 String cat = categories.get(position);

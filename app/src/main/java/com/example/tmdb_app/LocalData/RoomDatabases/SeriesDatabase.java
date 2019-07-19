@@ -6,9 +6,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.tmdb_app.LocalData.RoomDAO.SeriesDAO;
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.LocalData.RoomEntities.SeriesEntity;
 
-@Database(entities = {SeriesEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {SeriesEntity.class, GenresEntity.class}, version = 1, exportSchema = false)
 public abstract class SeriesDatabase extends RoomDatabase {
     
     private static SeriesDatabase SeriesDatabase = null;

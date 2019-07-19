@@ -17,7 +17,7 @@ public class GenreResults {
 
     @SerializedName("genres")
     @Expose
-    private List<Genre_ids> genres = null;
+    private List<Genre_ids> genres;
 
     public List<Genre_ids> getGenres() {
         return genres;

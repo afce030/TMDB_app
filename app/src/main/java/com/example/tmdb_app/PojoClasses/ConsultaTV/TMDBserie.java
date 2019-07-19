@@ -12,7 +12,7 @@ public class TMDBserie {
     private String originalName;
     @SerializedName("genre_ids")
     @Expose
-    private List<Integer> genreIds = null;
+    private List<Long> genreIds = null;
     @SerializedName("name")
     @Expose
     private String name;
@@ -55,11 +55,11 @@ public class TMDBserie {
         this.originalName = originalName;
     }
 
-    public List<Integer> getGenreIds() {
+    public List<Long> getGenreIds() {
         return genreIds;
     }
 
-    public void setGenreIds(List<Integer> genreIds) {
+    public void setGenreIds(List<Long> genreIds) {
         this.genreIds = genreIds;
     }
 

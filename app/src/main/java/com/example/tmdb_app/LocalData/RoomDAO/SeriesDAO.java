@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.tmdb_app.LocalData.RoomEntities.GenresEntity;
 import com.example.tmdb_app.LocalData.RoomEntities.SeriesEntity;
 
 import java.util.List;
@@ -27,6 +28,17 @@ public interface SeriesDAO {
     @Query("SELECT * FROM Series_table WHERE id=:ID")
     LiveData<List<SeriesEntity>> getSerieByID(Long ID);
 
+    @Query("UPDATE Series_table set isPopular=:a WHERE id=:id")
+    void updatePopular(Long id, int a);
+
+    @Query("UPDATE Series_table set isTop=:a WHERE id=:id")
+    void updateTop(Long id, int a);
+
+    @Query("UPDATE Series_table set isPopular=:a WHERE id=:id")
+    void updatePopular(int id, int a);
+
+    @Query("UPDATE Series_table set isTop=:a WHERE id=:id")
+    void updateTop(int id, int a);
 
     @Query("SELECT * FROM Series_table WHERE isPopular=1 ORDER BY popularity Desc")
     LiveData<List<SeriesEntity>> getPopularSeries();
@@ -39,10 +51,13 @@ public interface SeriesDAO {
     @Query("DELETE FROM Series_table WHERE isTop = 1")
     void deleteTopSeries();
 
+    @Query("SELECT * FROM Series_table WHERE originalName LIKE :pattern OR name LIKE :pattern")
+    LiveData<List<SeriesEntity>> getpattern(String pattern);
 
-    @Query("SELECT * FROM Series_table WHERE isUpcoming=1 ORDER BY firstAirDate Desc")
-    LiveData<List<SeriesEntity>> getUpcomingSeries();
-    @Query("DELETE FROM Series_table WHERE isUpcoming = 1")
-    void deleteUpcomingSeries();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertGenre(GenresEntity genresEntity);
+
+    @Query("SELECT * FROM Genres_table")
+    LiveData<List<GenresEntity>> obtainGenres();
 
 }

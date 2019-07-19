@@ -1,9 +1,11 @@
 package com.example.tmdb_app.Repositories;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.tmdb_app.APIconnections.GenresWS;
 import com.example.tmdb_app.APIconnections.TrailersWS;
@@ -85,13 +87,6 @@ public class MoviesRepo {
                     int top = 0;
                     int upcoming = 0;
 
-                    if(moviesDAO.getMovieByID(item.getId()).getValue() != null) {
-                        MoviesEntity x = moviesDAO.getMovieByID(item.getId()).getValue().get(0);
-                        popular = x.isPopular();
-                        top = x.isTop();
-                        upcoming = x.isUpcoming();
-                    }
-
                     switch (category){
                         case "popular":
                             popular = 1;
@@ -124,7 +119,7 @@ public class MoviesRepo {
                             upcoming,
                             page);
 
-                    new insertMoviesBackground(moviesDAO).execute(moviesEntity);
+                    new insertMoviesBackground(moviesDAO, category).execute(moviesEntity);
                 }
             }
 
@@ -168,17 +163,94 @@ public class MoviesRepo {
 
     }
 
+
+
+    public LiveData<List<MoviesEntity>> SearchMovies(String pattern){
+        refreshMoviesByPattern(pattern);
+        return moviesDAO.getpattern("%"+pattern+"%");
+    }
+    void refreshMoviesByPattern(String pattern){
+
+        Call<SearchResultsMovies> call = tmdBmovieWS.getMoviesByQuery(pattern, Constants.API_KEY,"es",1);
+        call.enqueue(new Callback<SearchResultsMovies>() {
+            @Override
+            public void onResponse(Call<SearchResultsMovies> call, Response<SearchResultsMovies> response) {
+
+                if(response.isSuccessful()){
+
+                    List<TMDBmovie> g = response.body().getResults();
+                    for(TMDBmovie item: g) {
+
+                        int popular = 0;
+                        int top = 0;
+                        int upcoming = 0;
+                        int pagina = 1;
+
+                        MoviesEntity moviesEntity = new MoviesEntity(
+                                item.getId(),
+                                item.getVoteCount(),
+                                item.getVideo(),
+                                item.getVoteAverage(),
+                                item.getTitle(),
+                                item.getPopularity(),
+                                item.getPosterPath(),
+                                item.getOriginalLanguage(),
+                                item.getOriginalTitle(),
+                                item.getGenreIds(),
+                                item.getBackdropPath(),
+                                item.getAdult(),
+                                item.getOverview(),
+                                item.getReleaseDate(),
+                                popular,
+                                top,
+                                upcoming,
+                                pagina);
+
+                        new insertMoviesBackground(moviesDAO, "").execute(moviesEntity);
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SearchResultsMovies> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
     private static class insertMoviesBackground extends AsyncTask<MoviesEntity, Void, Void> {
 
         private MoviesDAO moviesDAO;
+        private String category;
 
-        public insertMoviesBackground(MoviesDAO moviesDAO) {
+        public insertMoviesBackground(MoviesDAO moviesDAO, String category) {
             this.moviesDAO = moviesDAO;
+            this.category = category;
         }
 
         @Override
         protected Void doInBackground(MoviesEntity... moviesEntities) {
-            moviesDAO.insertMovie(moviesEntities[0]);
+            try{
+                moviesDAO.insertMovie(moviesEntities[0]);
+            }
+            catch (SQLiteConstraintException exception){
+                switch (category){
+                    case "popular":
+                        moviesDAO.updatePopular(moviesEntities[0].getId(),moviesEntities[0].isPopular());
+                        break;
+                    case "top_rated":
+                        moviesDAO.updateTop(moviesEntities[0].getId(),moviesEntities[0].isTop());
+                        break;
+                    case "upcoming":
+                        moviesDAO.updateUpcoming(moviesEntities[0].getId(),moviesEntities[0].isUpcoming());
+                        break;
+                }
+            }
             return null;
         }
     }
