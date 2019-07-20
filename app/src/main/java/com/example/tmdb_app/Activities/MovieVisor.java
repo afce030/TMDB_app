@@ -112,13 +112,7 @@ public class MovieVisor extends AppCompatActivity {
         rating.setText(calificacion.substring(0,3));//Se toman los primero 3 para evitar que salgan muchos numeros
         overview.setText(resumen);
         genders.setText(generos);
-
-        //Release solo disponible para peliculas
-        if(mediaType.toLowerCase().equals("movie")) {
-            release.setText(estreno);
-        }else {
-            release.setText("No disponible");
-        }
+        release.setText(estreno);
 
         if(adultos){
             adults.setText("Sí");
